@@ -296,6 +296,7 @@
     <div class="nav-right">
       <div class="lang-switcher">
         <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
         <button class="lang-btn" onclick="setLang('zh-Hans')">简中</button>
         <button class="lang-btn" onclick="setLang('zh-Hant')">繁中</button>
       </div>
@@ -402,6 +403,33 @@
         footer_privacy: 'Privacy Policy',
         footer_copy:   '© 2026 redjack™. All rights reserved.',
       },
+      es: {
+        nav_privacy:   'Privacidad',
+        eyebrow:       'Ya disponible en iOS',
+        hero_h1:       'Ellos juegan blackjack.<br />Nosotros jugamos <span>redjack</span>.',
+        tagline:       'Aprende a ganar ventaja.',
+        hero_p:        'El blackjack es un juego perdedor, a menos que sepas lo que haces. redjack te enseña a contar cartas desde cero: primero la estrategia perfecta, luego el conteo Hi-Lo, las apuestas escalonadas y finalmente los tres juntos. Cada función está disponible. Nada está "próximamente".',
+        cta:           'Descargar en el App Store',
+        cta_sub:       'Gratis para empezar · iOS',
+        features_h2:   'Aprende por etapas.',
+        s01_num:       'Paso 01',
+        s01_title:     'Estrategia perfecta',
+        s01_desc:      'Domina la jugada estadísticamente óptima para cada mano antes de introducir el conteo.',
+        s02_num:       'Paso 02',
+        s02_title:     'Conteo Hi-Lo',
+        s02_desc:      'Practica mantener un conteo corriente mientras se reparten las cartas. +1, −1, 0.',
+        s03_num:       'Paso 03',
+        s03_title:     'Apuestas escalonadas',
+        s03_desc:      'Aprende a ajustar tus apuestas según el conteo. Apuesta más cuando el zapato es favorable. Mínimo cuando no lo es.',
+        s04_num:       'Paso 04',
+        s04_title:     'Práctica combinada',
+        s04_desc:      'Las tres habilidades a la vez: jugadas perfectas, conteo corriente y apuestas simultáneas.',
+        pitch_1:       'La mayoría de las apps de blackjack te enseñan la estrategia básica y ya. redjack va más lejos: te enseña a dejar de jugar un juego perdedor y empezar a jugar uno ganador.',
+        pitch_2:       'Localización completa en chino disponible: 简体中文 y 廣東話.',
+        footer_appstore: 'App Store',
+        footer_privacy: 'Política de privacidad',
+        footer_copy:   '© 2026 redjack™. Todos los derechos reservados.',
+      },
       'zh-Hans': {
         nav_privacy:   '隐私',
         eyebrow:       '现已登陆 iOS',
@@ -498,6 +526,8 @@
         lang = 'zh-Hant';
       } else if (browser.startsWith('zh')) {
         lang = 'zh-Hans';
+      } else if (browser.startsWith('es')) {
+        lang = 'es';
       }
       if (lang !== 'en') setLang(lang);
     })();
