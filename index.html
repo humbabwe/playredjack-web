@@ -165,7 +165,21 @@
       border: 2px solid var(--red);
       border-radius: 14px;
       padding: 28px 24px;
+      position: relative;
     }
+
+    .suit {
+      position: absolute;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .suit-tl { top: 10px; left: 14px; }
+    .suit-br { bottom: 10px; right: 14px; transform: rotate(180deg); display: inline-block; }
+    .suit-black { color: var(--text-muted); }
+    .suit-red   { color: var(--red); }
 
     .feature-number {
       font-size: 11px;
@@ -275,21 +289,29 @@
     <h2>Learn it in stages.</h2>
     <div class="feature-grid">
       <div class="feature-card">
+        <span class="suit suit-tl suit-black">♣</span>
+        <span class="suit suit-br suit-black">♣</span>
         <p class="feature-number">Step 01</p>
         <h3>Perfect Strategy</h3>
         <p>Master the statistically optimal play for every hand before introducing counting.</p>
       </div>
       <div class="feature-card">
+        <span class="suit suit-tl suit-red">♦</span>
+        <span class="suit suit-br suit-red">♦</span>
         <p class="feature-number">Step 02</p>
         <h3>Hi-Lo Counting</h3>
         <p>Practice keeping a running count while cards are dealt. +1, −1, 0. Simple in theory, sharp in practice.</p>
       </div>
       <div class="feature-card">
+        <span class="suit suit-tl suit-black">♠</span>
+        <span class="suit suit-br suit-black">♠</span>
         <p class="feature-number">Step 03</p>
         <h3>Bet Spreads</h3>
         <p>Learn to size your bets based on the count. Bet more when the shoe is hot. Min bet when it isn't.</p>
       </div>
       <div class="feature-card">
+        <span class="suit suit-tl suit-red">♥</span>
+        <span class="suit suit-br suit-red">♥</span>
         <p class="feature-number">Step 04</p>
         <h3>Combined Practice</h3>
         <p>All three skills at once. Make correct plays, maintain the count, and size bets simultaneously.</p>
