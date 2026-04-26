@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — redjack</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #eceae6;
+      --surface:    #f8f7f5;
+      --border:     #d4d0c8;
+      --red:        #c0152a;
+      --red-dim:    #cc3344;
+      --text:       #1a1a1a;
+      --text-sec:   #333333;
+      --text-muted: #888880;
+      --btn-text:   #ffffff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: -1px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    nav a.back {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    nav a.back:hover { color: var(--red); }
+
+    .content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .updated {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    .intro {
+      font-size: 17px;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      padding: 24px;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 2px solid var(--red);
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 15px;
+      color: var(--text-sec);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 16px;
+    }
+
+    ul li {
+      font-size: 15px;
+      color: var(--text-sec);
+      padding: 6px 0 6px 20px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+    }
+
+    a { color: var(--red); text-decoration: none; }
+    a:hover { opacity: 0.75; }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    footer {
+      padding: 40px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .content { padding: 48px 20px; }
+      footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="/">
+      <div class="logo-circle">rȷ</div>
+      <span class="logo-text">redjack</span>
+    </a>
+    <a class="back" href="/">← Back</a>
+  </nav>
+
+  <div class="content">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: April 26, 2026</p>
+
+    <div class="intro">
+      Privacy is the standard. Those who violate people's privacy are evil. Full stop. We don't do it.
+    </div>
+
+    <h2>What We Collect</h2>
+
+    <h3>Data stored on your device</h3>
+    <p>redjack stores the following information locally on your device:</p>
+    <ul>
+      <li>Your redjack token balance and weekly reload date</li>
+      <li>Practice statistics (hands played, accuracy, win/loss records)</li>
+      <li>Shoe progress (so you can resume a session)</li>
+      <li>Active module session state</li>
+    </ul>
+    <p>This data never leaves your device and is not transmitted to us or any third party.</p>
+
+    <h3>Purchase data</h3>
+    <p>If you make an in-app purchase (subscription or token pack), your transaction is processed through Apple's App Store. We use RevenueCat to manage subscription status. RevenueCat may collect:</p>
+    <ul>
+      <li>A randomized device identifier</li>
+      <li>Purchase history and subscription status</li>
+      <li>App version and device type</li>
+    </ul>
+    <p>RevenueCat does not collect your name, email address, or payment information. You can review RevenueCat's privacy policy at <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>.</p>
+
+    <hr />
+
+    <h2>What We Do Not Collect</h2>
+    <ul>
+      <li>No name, email address, or contact information</li>
+      <li>No location data</li>
+      <li>No camera or microphone access</li>
+      <li>No advertising identifiers</li>
+      <li>No analytics or usage tracking</li>
+    </ul>
+
+    <hr />
+
+    <h2>Children's Privacy</h2>
+    <p>redjack is not directed at children under 13. We don't collect information about anyone anyway, so if your kids stumble upon us, we won't be collecting theirs either.</p>
+
+    <hr />
+
+    <h2>Changes to This Policy</h2>
+    <p>If we update this policy, we will revise the "Last updated" date above. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+    <hr />
+
+    <h2>Contact</h2>
+    <p>
+      Reach out at <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a> (or <a href="mailto:support@playredjack.com">support@playredjack.com</a> if you want to do it the boring way).
+    </p>
+  </div>
+
+  <footer>
+    <p>© 2026 redjack™. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

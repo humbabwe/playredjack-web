@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>redjack — Learn to gain the advantage.</title>
+  <meta name="description" content="They play blackjack. We play redjack. Learn card counting from the ground up — perfect strategy, Hi-Lo counting, bet spreads, and combined practice." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #eceae6;
+      --surface:    #f8f7f5;
+      --border:     #d4d0c8;
+      --red:        #c0152a;
+      --red-dim:    #cc3344;
+      --text:       #1a1a1a;
+      --text-sec:   #333333;
+      --text-muted: #888880;
+      --btn-text:   #ffffff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: -1px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    nav a.nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    nav a.nav-link:hover { color: var(--red); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 100px 40px 80px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span { color: var(--red); }
+
+    .hero-tagline {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-sec);
+      font-weight: 600;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--text-sec);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .app-store-btn {
+      display: inline-block;
+      background: var(--red);
+      color: var(--btn-text);
+      font-size: 15px;
+      font-weight: 900;
+      padding: 16px 40px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .app-store-btn:hover { opacity: 0.85; }
+
+    .app-store-sub {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── Features ── */
+    .features {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 48px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 2px solid var(--red);
+      border-radius: 14px;
+      padding: 28px 24px;
+    }
+
+    .feature-number {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Pitch ── */
+    .pitch {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .pitch p {
+      max-width: 640px;
+      margin: 0 auto 16px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text-sec);
+    }
+
+    .pitch p:last-child {
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    footer a {
+      color: var(--red);
+      text-decoration: none;
+    }
+
+    footer a:hover { opacity: 0.75; }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 60px 20px 60px; }
+      .features { padding: 60px 20px; }
+      .pitch { padding: 60px 20px; }
+      footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="/">
+      <div class="logo-circle">rȷ</div>
+      <span class="logo-text">redjack</span>
+    </a>
+    <a class="nav-link" href="/privacy.html">Privacy</a>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow">Now available on iOS</p>
+    <h1>They play blackjack.<br />We play <span>redjack</span>.</h1>
+    <p class="hero-tagline">Learn to gain the advantage.</p>
+    <p>
+      Blackjack is a losing game — unless you know what you're doing.
+      redjack teaches you card counting from the ground up: perfect strategy first,
+      then Hi-Lo counting, bet spreads, and finally all three together.
+      Every feature is built. Nothing is coming soon.
+    </p>
+    <a class="app-store-btn" href="https://apps.apple.com/app/redjack/id6762048051" target="_blank">
+      Download on the App Store
+    </a>
+    <p class="app-store-sub">Free to start &nbsp;·&nbsp; iOS</p>
+  </section>
+
+  <section class="features">
+    <h2>Learn it in stages.</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <p class="feature-number">Step 01</p>
+        <h3>Perfect Strategy</h3>
+        <p>Master the statistically optimal play for every hand before introducing counting.</p>
+      </div>
+      <div class="feature-card">
+        <p class="feature-number">Step 02</p>
+        <h3>Hi-Lo Counting</h3>
+        <p>Practice keeping a running count while cards are dealt. +1, −1, 0. Simple in theory, sharp in practice.</p>
+      </div>
+      <div class="feature-card">
+        <p class="feature-number">Step 03</p>
+        <h3>Bet Spreads</h3>
+        <p>Learn to size your bets based on the count. Bet more when the shoe is hot. Min bet when it isn't.</p>
+      </div>
+      <div class="feature-card">
+        <p class="feature-number">Step 04</p>
+        <h3>Combined Practice</h3>
+        <p>All three skills at once. Make correct plays, maintain the count, and size bets simultaneously.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pitch">
+    <p>
+      Most blackjack apps teach you basic strategy and call it a day.
+      redjack goes further — it teaches you to stop playing a losing game
+      and start playing a winning one.
+    </p>
+    <p>
+      Full Chinese localization available (简体中文 &amp; 廣東話).
+    </p>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="https://apps.apple.com/app/redjack/id6762048051" target="_blank">App Store</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a>
+    </div>
+    <p>© 2026 redjack™. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
