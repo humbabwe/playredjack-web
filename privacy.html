@@ -62,6 +62,12 @@
       color: var(--text);
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
     nav a.back {
       color: var(--text-muted);
       text-decoration: none;
@@ -70,6 +76,27 @@
     }
 
     nav a.back:hover { color: var(--red); }
+
+    .lang-switcher {
+      display: flex;
+      gap: 4px;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .lang-btn:hover { border-color: var(--red); color: var(--red); }
+    .lang-btn.active { border-color: var(--red); color: var(--red); background: rgba(192,21,42,0.06); }
 
     .content {
       max-width: 680px;
@@ -178,70 +205,219 @@
       <div class="logo-circle">rȷ</div>
       <span class="logo-text">redjack</span>
     </a>
-    <a class="back" href="/">← Back</a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('zh-Hans')">简中</button>
+        <button class="lang-btn" onclick="setLang('zh-Hant')">繁中</button>
+      </div>
+      <a class="back" data-i18n="back" href="/">← Back</a>
+    </div>
   </nav>
 
   <div class="content">
-    <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: April 26, 2026</p>
+    <h1 data-i18n="title">Privacy Policy</h1>
+    <p class="updated" data-i18n="updated">Last updated: April 26, 2026</p>
 
-    <div class="intro">
+    <div class="intro" data-i18n="intro">
       Privacy is the standard. Those who violate people's privacy are evil. Full stop. We don't do it.
     </div>
 
-    <h2>What We Collect</h2>
+    <h2 data-i18n="collect_h">What We Collect</h2>
 
-    <h3>Data stored on your device</h3>
-    <p>redjack stores the following information locally on your device:</p>
+    <h3 data-i18n="device_h">Data stored on your device</h3>
+    <p data-i18n="device_p">redjack stores the following information locally on your device:</p>
     <ul>
-      <li>Your redjack token balance and weekly reload date</li>
-      <li>Practice statistics (hands played, accuracy, win/loss records)</li>
-      <li>Shoe progress (so you can resume a session)</li>
-      <li>Active module session state</li>
+      <li data-i18n="li_tokens">Your redjack token balance and weekly reload date</li>
+      <li data-i18n="li_stats">Practice statistics (hands played, accuracy, win/loss records)</li>
+      <li data-i18n="li_shoe">Shoe progress (so you can resume a session)</li>
+      <li data-i18n="li_session">Active module session state</li>
     </ul>
-    <p>This data never leaves your device and is not transmitted to us or any third party.</p>
+    <p data-i18n="device_never">This data never leaves your device and is not transmitted to us or any third party.</p>
 
-    <h3>Purchase data</h3>
-    <p>If you make an in-app purchase (subscription or token pack), your transaction is processed through Apple's App Store. We use RevenueCat to manage subscription status. RevenueCat may collect:</p>
+    <h3 data-i18n="purchase_h">Purchase data</h3>
+    <p data-i18n="purchase_p">If you make an in-app purchase (subscription or token pack), your transaction is processed through Apple's App Store. We use RevenueCat to manage subscription status. RevenueCat may collect:</p>
     <ul>
-      <li>A randomized device identifier</li>
-      <li>Purchase history and subscription status</li>
-      <li>App version and device type</li>
+      <li data-i18n="li_id">A randomized device identifier</li>
+      <li data-i18n="li_purchase">Purchase history and subscription status</li>
+      <li data-i18n="li_device">App version and device type</li>
     </ul>
-    <p>RevenueCat does not collect your name, email address, or payment information. You can review RevenueCat's privacy policy at <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>.</p>
+    <p data-i18n="purchase_rc">RevenueCat does not collect your name, email address, or payment information. You can review RevenueCat's privacy policy at <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>.</p>
 
     <hr />
 
-    <h2>What We Do Not Collect</h2>
+    <h2 data-i18n="not_collect_h">What We Do Not Collect</h2>
     <ul>
-      <li>No name, email address, or contact information</li>
-      <li>No location data</li>
-      <li>No camera or microphone access</li>
-      <li>No advertising identifiers</li>
-      <li>No analytics or usage tracking</li>
+      <li data-i18n="nc_1">No name, email address, or contact information</li>
+      <li data-i18n="nc_2">No location data</li>
+      <li data-i18n="nc_3">No camera or microphone access</li>
+      <li data-i18n="nc_4">No advertising identifiers</li>
+      <li data-i18n="nc_5">No analytics or usage tracking</li>
     </ul>
 
     <hr />
 
-    <h2>Children's Privacy</h2>
-    <p>redjack is not directed at children under 13. We don't collect information about anyone anyway, so if your kids stumble upon us, we won't be collecting theirs either.</p>
+    <h2 data-i18n="children_h">Children's Privacy</h2>
+    <p data-i18n="children_p">redjack is not directed at children under 13. We don't collect information about anyone anyway, so if your kids stumble upon us, we won't be collecting theirs either.</p>
 
     <hr />
 
-    <h2>Changes to This Policy</h2>
-    <p>If we update this policy, we will revise the "Last updated" date above. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+    <h2 data-i18n="changes_h">Changes to This Policy</h2>
+    <p data-i18n="changes_p">If we update this policy, we will revise the "Last updated" date above. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
 
     <hr />
 
-    <h2>Contact</h2>
-    <p>
+    <h2 data-i18n="contact_h">Contact</h2>
+    <p data-i18n="contact_p">
       Reach out at <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a> (or <a href="mailto:support@playredjack.com">support@playredjack.com</a> if you want to do it the boring way).
     </p>
   </div>
 
   <footer>
-    <p>© 2026 redjack™. All rights reserved.</p>
+    <p data-i18n="footer_copy">© 2026 redjack™. All rights reserved.</p>
   </footer>
+
+  <script>
+    const STRINGS = {
+      en: {
+        back:          '← Back',
+        title:         'Privacy Policy',
+        updated:       'Last updated: April 26, 2026',
+        intro:         'Privacy is the standard. Those who violate people\'s privacy are evil. Full stop. We don\'t do it.',
+        collect_h:     'What We Collect',
+        device_h:      'Data stored on your device',
+        device_p:      'redjack stores the following information locally on your device:',
+        li_tokens:     'Your redjack token balance and weekly reload date',
+        li_stats:      'Practice statistics (hands played, accuracy, win/loss records)',
+        li_shoe:       'Shoe progress (so you can resume a session)',
+        li_session:    'Active module session state',
+        device_never:  'This data never leaves your device and is not transmitted to us or any third party.',
+        purchase_h:    'Purchase data',
+        purchase_p:    'If you make an in-app purchase (subscription or token pack), your transaction is processed through Apple\'s App Store. We use RevenueCat to manage subscription status. RevenueCat may collect:',
+        li_id:         'A randomized device identifier',
+        li_purchase:   'Purchase history and subscription status',
+        li_device:     'App version and device type',
+        purchase_rc:   'RevenueCat does not collect your name, email address, or payment information. You can review RevenueCat\'s privacy policy at <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>.',
+        not_collect_h: 'What We Do Not Collect',
+        nc_1:          'No name, email address, or contact information',
+        nc_2:          'No location data',
+        nc_3:          'No camera or microphone access',
+        nc_4:          'No advertising identifiers',
+        nc_5:          'No analytics or usage tracking',
+        children_h:    'Children\'s Privacy',
+        children_p:    'redjack is not directed at children under 13. We don\'t collect information about anyone anyway, so if your kids stumble upon us, we won\'t be collecting theirs either.',
+        changes_h:     'Changes to This Policy',
+        changes_p:     'If we update this policy, we will revise the "Last updated" date above. Continued use of the app after changes constitutes acceptance of the updated policy.',
+        contact_h:     'Contact',
+        contact_p:     'Reach out at <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a> (or <a href="mailto:support@playredjack.com">support@playredjack.com</a> if you want to do it the boring way).',
+        footer_copy:   '© 2026 redjack™. All rights reserved.',
+      },
+      'zh-Hans': {
+        back:          '← 返回',
+        title:         '隐私政策',
+        updated:       '最后更新：2026年4月26日',
+        intro:         '隐私是底线。侵犯他人隐私者，即是作恶。毫无例外。我们不会这样做。',
+        collect_h:     '我们收集什么',
+        device_h:      '存储在您设备上的数据',
+        device_p:      'redjack 将以下信息本地存储在您的设备上：',
+        li_tokens:     '您的 redjack 代币余额及每周补充日期',
+        li_stats:      '练习统计数据（游戏手数、正确率、胜负记录）',
+        li_shoe:       '牌靴进度（以便您继续上次的场次）',
+        li_session:    '当前模块场次状态',
+        device_never:  '这些数据永远不会离开您的设备，也不会传输给我们或任何第三方。',
+        purchase_h:    '购买数据',
+        purchase_p:    '如果您进行应用内购买（订阅或代币包），您的交易将通过 Apple App Store 处理。我们使用 RevenueCat 管理订阅状态。RevenueCat 可能收集：',
+        li_id:         '随机生成的设备标识符',
+        li_purchase:   '购买记录及订阅状态',
+        li_device:     '应用版本及设备类型',
+        purchase_rc:   'RevenueCat 不会收集您的姓名、电子邮件地址或支付信息。您可以在 <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a> 查看 RevenueCat 的隐私政策。',
+        not_collect_h: '我们不收集什么',
+        nc_1:          '不收集姓名、电子邮件地址或联系信息',
+        nc_2:          '不收集位置数据',
+        nc_3:          '不访问摄像头或麦克风',
+        nc_4:          '不收集广告标识符',
+        nc_5:          '不进行分析或使用追踪',
+        children_h:    '儿童隐私',
+        children_p:    'redjack 不面向13岁以下儿童。无论如何，我们不收集任何人的信息，所以即使您的孩子偶然发现我们，我们也不会收集他们的信息。',
+        changes_h:     '政策变更',
+        changes_p:     '如果我们更新本政策，将修改上方的"最后更新"日期。在变更后继续使用本应用即表示接受更新后的政策。',
+        contact_h:     '联系方式',
+        contact_p:     '请发送邮件至 <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a>（或发送至 <a href="mailto:support@playredjack.com">support@playredjack.com</a>，如果您更喜欢正式的方式）。',
+        footer_copy:   '© 2026 redjack™。保留所有权利。',
+      },
+      'zh-Hant': {
+        back:          '← 返回',
+        title:         '隱私政策',
+        updated:       '最後更新：2026年4月26日',
+        intro:         '隱私是底線。侵犯他人隱私者，即是作惡。毫無例外。我們不會這樣做。',
+        collect_h:     '我們收集什麼',
+        device_h:      '儲存在您裝置上的資料',
+        device_p:      'redjack 將以下資訊本地儲存在您的裝置上：',
+        li_tokens:     '您的 redjack 代幣餘額及每週補充日期',
+        li_stats:      '練習統計資料（遊戲手數、正確率、勝負記錄）',
+        li_shoe:       '牌靴進度（以便您繼續上次的場次）',
+        li_session:    '當前模組場次狀態',
+        device_never:  '這些資料永遠不會離開您的裝置，也不會傳輸給我們或任何第三方。',
+        purchase_h:    '購買資料',
+        purchase_p:    '如果您進行應用程式內購買（訂閱或代幣包），您的交易將透過 Apple App Store 處理。我們使用 RevenueCat 管理訂閱狀態。RevenueCat 可能收集：',
+        li_id:         '隨機產生的裝置識別碼',
+        li_purchase:   '購買記錄及訂閱狀態',
+        li_device:     '應用程式版本及裝置類型',
+        purchase_rc:   'RevenueCat 不會收集您的姓名、電子郵件地址或付款資訊。您可以在 <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a> 查看 RevenueCat 的隱私政策。',
+        not_collect_h: '我們不收集什麼',
+        nc_1:          '不收集姓名、電子郵件地址或聯絡資訊',
+        nc_2:          '不收集位置資料',
+        nc_3:          '不存取相機或麥克風',
+        nc_4:          '不收集廣告識別碼',
+        nc_5:          '不進行分析或使用追蹤',
+        children_h:    '兒童隱私',
+        children_p:    'redjack 不面向13歲以下兒童。無論如何，我們不收集任何人的資訊，所以即使您的孩子偶然發現我們，我們也不會收集他們的資訊。',
+        changes_h:     '政策變更',
+        changes_p:     '如果我們更新本政策，將修改上方的「最後更新」日期。在變更後繼續使用本應用程式即表示接受更新後的政策。',
+        contact_h:     '聯絡方式',
+        contact_p:     '請發送郵件至 <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a>（或發送至 <a href="mailto:support@playredjack.com">support@playredjack.com</a>，如果您更喜歡正式的方式）。',
+        footer_copy:   '© 2026 redjack™。保留所有權利。',
+      },
+    };
+
+    // Keys that need innerHTML (contain HTML tags)
+    const HTML_KEYS = new Set(['purchase_rc', 'contact_p']);
+
+    function setLang(lang) {
+      const strings = STRINGS[lang] || STRINGS.en;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (strings[key] === undefined) return;
+        if (HTML_KEYS.has(key)) {
+          el.innerHTML = strings[key];
+        } else {
+          el.textContent = strings[key];
+        }
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('onclick') === `setLang('${lang}')`);
+      });
+
+      document.documentElement.lang = lang === 'zh-Hans' ? 'zh-Hans' : lang === 'zh-Hant' ? 'zh-Hant' : 'en';
+      localStorage.setItem('rj-lang', lang);
+    }
+
+    (function () {
+      const saved = localStorage.getItem('rj-lang');
+      const browser = navigator.language || '';
+      let lang = 'en';
+      if (saved && STRINGS[saved]) {
+        lang = saved;
+      } else if (browser.startsWith('zh-Hant') || browser === 'zh-TW' || browser === 'zh-HK') {
+        lang = 'zh-Hant';
+      } else if (browser.startsWith('zh')) {
+        lang = 'zh-Hans';
+      }
+      if (lang !== 'en') setLang(lang);
+    })();
+  </script>
 
 </body>
 </html>

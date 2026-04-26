@@ -64,6 +64,12 @@
       color: var(--text);
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
     nav a.nav-link {
       color: var(--text-muted);
       text-decoration: none;
@@ -73,6 +79,27 @@
     }
 
     nav a.nav-link:hover { color: var(--red); }
+
+    .lang-switcher {
+      display: flex;
+      gap: 4px;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .lang-btn:hover { border-color: var(--red); color: var(--red); }
+    .lang-btn.active { border-color: var(--red); color: var(--red); background: rgba(192,21,42,0.06); }
 
     /* ── Hero ── */
     .hero {
@@ -266,78 +293,215 @@
       <div class="logo-circle">rȷ</div>
       <span class="logo-text">redjack</span>
     </a>
-    <a class="nav-link" href="/privacy.html">Privacy</a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('zh-Hans')">简中</button>
+        <button class="lang-btn" onclick="setLang('zh-Hant')">繁中</button>
+      </div>
+      <a class="nav-link" data-i18n="nav_privacy" href="/privacy.html">Privacy</a>
+    </div>
   </nav>
 
   <section class="hero">
-    <p class="hero-eyebrow">Now available on iOS</p>
-    <h1>They play blackjack.<br />We play <span>redjack</span>.</h1>
-    <p class="hero-tagline">Learn to gain the advantage.</p>
-    <p>
+    <p class="hero-eyebrow" data-i18n="eyebrow">Now available on iOS</p>
+    <h1 id="hero-h1">They play blackjack.<br />We play <span>redjack</span>.</h1>
+    <p class="hero-tagline" data-i18n="tagline">Learn to gain the advantage.</p>
+    <p data-i18n="hero_p">
       Blackjack is a losing game — unless you know what you're doing.
       redjack teaches you card counting from the ground up: perfect strategy first,
       then Hi-Lo counting, bet spreads, and finally all three together.
       Every feature is built. Nothing is coming soon.
     </p>
-    <a class="app-store-btn" href="https://apps.apple.com/app/redjack/id6762048051" target="_blank">
+    <a class="app-store-btn" href="https://apps.apple.com/app/redjack/id6762048051" target="_blank" data-i18n="cta">
       Download on the App Store
     </a>
-    <p class="app-store-sub">Free to start &nbsp;·&nbsp; iOS</p>
+    <p class="app-store-sub" data-i18n="cta_sub">Free to start &nbsp;·&nbsp; iOS</p>
   </section>
 
   <section class="features">
-    <h2>Learn it in stages.</h2>
+    <h2 data-i18n="features_h2">Learn it in stages.</h2>
     <div class="feature-grid">
       <div class="feature-card">
         <span class="suit suit-tl suit-black">♣</span>
         <span class="suit suit-br suit-black">♣</span>
-        <p class="feature-number">Step 01</p>
-        <h3>Perfect Strategy</h3>
-        <p>Master the statistically optimal play for every hand before introducing counting.</p>
+        <p class="feature-number" data-i18n="s01_num">Step 01</p>
+        <h3 data-i18n="s01_title">Perfect Strategy</h3>
+        <p data-i18n="s01_desc">Master the statistically optimal play for every hand before introducing counting.</p>
       </div>
       <div class="feature-card">
         <span class="suit suit-tl suit-red">♦</span>
         <span class="suit suit-br suit-red">♦</span>
-        <p class="feature-number">Step 02</p>
-        <h3>Hi-Lo Counting</h3>
-        <p>Practice keeping a running count while cards are dealt. +1, −1, 0. Simple in theory, sharp in practice.</p>
+        <p class="feature-number" data-i18n="s02_num">Step 02</p>
+        <h3 data-i18n="s02_title">Hi-Lo Counting</h3>
+        <p data-i18n="s02_desc">Practice keeping a running count while cards are dealt. +1, −1, 0. Simple in theory, sharp in practice.</p>
       </div>
       <div class="feature-card">
         <span class="suit suit-tl suit-black">♠</span>
         <span class="suit suit-br suit-black">♠</span>
-        <p class="feature-number">Step 03</p>
-        <h3>Bet Spreads</h3>
-        <p>Learn to size your bets based on the count. Bet more when the shoe is hot. Min bet when it isn't.</p>
+        <p class="feature-number" data-i18n="s03_num">Step 03</p>
+        <h3 data-i18n="s03_title">Bet Spreads</h3>
+        <p data-i18n="s03_desc">Learn to size your bets based on the count. Bet more when the shoe is hot. Min bet when it isn't.</p>
       </div>
       <div class="feature-card">
         <span class="suit suit-tl suit-red">♥</span>
         <span class="suit suit-br suit-red">♥</span>
-        <p class="feature-number">Step 04</p>
-        <h3>Combined Practice</h3>
-        <p>All three skills at once. Make correct plays, maintain the count, and size bets simultaneously.</p>
+        <p class="feature-number" data-i18n="s04_num">Step 04</p>
+        <h3 data-i18n="s04_title">Combined Practice</h3>
+        <p data-i18n="s04_desc">All three skills at once. Make correct plays, maintain the count, and size bets simultaneously.</p>
       </div>
     </div>
   </section>
 
   <section class="pitch">
-    <p>
+    <p data-i18n="pitch_1">
       Most blackjack apps teach you basic strategy and call it a day.
       redjack goes further — it teaches you to stop playing a losing game
       and start playing a winning one.
     </p>
-    <p>
+    <p data-i18n="pitch_2">
       Full Chinese localization available (简体中文 &amp; 廣東話).
     </p>
   </section>
 
   <footer>
     <div class="footer-links">
-      <a href="https://apps.apple.com/app/redjack/id6762048051" target="_blank">App Store</a>
-      <a href="/privacy.html">Privacy Policy</a>
+      <a href="https://apps.apple.com/app/redjack/id6762048051" target="_blank" data-i18n="footer_appstore">App Store</a>
+      <a href="/privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
       <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a>
     </div>
-    <p>© 2026 redjack™. All rights reserved.</p>
+    <p data-i18n="footer_copy">© 2026 redjack™. All rights reserved.</p>
   </footer>
+
+  <script>
+    const STRINGS = {
+      en: {
+        nav_privacy:   'Privacy',
+        eyebrow:       'Now available on iOS',
+        hero_h1:       'They play blackjack.<br />We play <span>redjack</span>.',
+        tagline:       'Learn to gain the advantage.',
+        hero_p:        'Blackjack is a losing game — unless you know what you\'re doing. redjack teaches you card counting from the ground up: perfect strategy first, then Hi-Lo counting, bet spreads, and finally all three together. Every feature is built. Nothing is coming soon.',
+        cta:           'Download on the App Store',
+        cta_sub:       'Free to start \u00a0·\u00a0 iOS',
+        features_h2:   'Learn it in stages.',
+        s01_num:       'Step 01',
+        s01_title:     'Perfect Strategy',
+        s01_desc:      'Master the statistically optimal play for every hand before introducing counting.',
+        s02_num:       'Step 02',
+        s02_title:     'Hi-Lo Counting',
+        s02_desc:      'Practice keeping a running count while cards are dealt. +1, −1, 0. Simple in theory, sharp in practice.',
+        s03_num:       'Step 03',
+        s03_title:     'Bet Spreads',
+        s03_desc:      'Learn to size your bets based on the count. Bet more when the shoe is hot. Min bet when it isn\'t.',
+        s04_num:       'Step 04',
+        s04_title:     'Combined Practice',
+        s04_desc:      'All three skills at once. Make correct plays, maintain the count, and size bets simultaneously.',
+        pitch_1:       'Most blackjack apps teach you basic strategy and call it a day. redjack goes further — it teaches you to stop playing a losing game and start playing a winning one.',
+        pitch_2:       'Full Chinese localization available (简体中文 &amp; 廣東話).',
+        footer_appstore: 'App Store',
+        footer_privacy: 'Privacy Policy',
+        footer_copy:   '© 2026 redjack™. All rights reserved.',
+      },
+      'zh-Hans': {
+        nav_privacy:   '隐私',
+        eyebrow:       '现已登陆 iOS',
+        hero_h1:       '他们玩二十一点。<br />我们玩 <span>redjack</span>。',
+        tagline:       '学会获得优势。',
+        hero_p:        '二十一点是一场注定输的游戏——除非你知道该怎么玩。redjack 从零开始教你算牌：先是完美策略，然后是高低计数法、押注幅度，最后将三者融为一体。每项功能均已上线，没有"即将推出"。',
+        cta:           '在 App Store 下载',
+        cta_sub:       '免费开始 · iOS',
+        features_h2:   '分阶段学习。',
+        s01_num:       '第一步',
+        s01_title:     '完美二十一点',
+        s01_desc:      '在引入算牌前，先掌握每手牌的统计最优打法。',
+        s02_num:       '第二步',
+        s02_title:     '高低计数法',
+        s02_desc:      '练习在发牌过程中保持当前计数。+1、−1、0。理论简单，实战需要磨练。',
+        s03_num:       '第三步',
+        s03_title:     '押注幅度',
+        s03_desc:      '学会根据计数调整下注大小。牌靴热时多押，不热时保持最低下注。',
+        s04_num:       '第四步',
+        s04_title:     '综合练习',
+        s04_desc:      '三项技能同时运用：完美打牌、保持计数、同步调整下注。',
+        pitch_1:       '大多数二十一点应用教完基本策略就结束了。redjack 更进一步——它教你从输家变成赢家。',
+        pitch_2:       '支持简体中文及廣東話。',
+        footer_appstore: 'App Store',
+        footer_privacy: '隐私政策',
+        footer_copy:   '© 2026 redjack™。保留所有权利。',
+      },
+      'zh-Hant': {
+        nav_privacy:   '隱私',
+        eyebrow:       '現已登陸 iOS',
+        hero_h1:       '他們玩二十一點。<br />我們玩 <span>redjack</span>。',
+        tagline:       '學會獲得優勢。',
+        hero_p:        '二十一點是一場注定輸的遊戲——除非你知道該怎麼玩。redjack 從零開始教你算牌：先是完美策略，然後是高低計數法、押注幅度，最後將三者融為一體。每項功能均已上線，沒有「即將推出」。',
+        cta:           '在 App Store 下載',
+        cta_sub:       '免費開始 · iOS',
+        features_h2:   '分階段學習。',
+        s01_num:       '第一步',
+        s01_title:     '完美二十一點',
+        s01_desc:      '在引入算牌前，先掌握每手牌的統計最優打法。',
+        s02_num:       '第二步',
+        s02_title:     '高低計數法',
+        s02_desc:      '練習在發牌過程中保持當前計數。+1、−1、0。理論簡單，實戰需要磨練。',
+        s03_num:       '第三步',
+        s03_title:     '押注幅度',
+        s03_desc:      '學會根據計數調整下注大小。牌靴熱時多押，不熱時保持最低下注。',
+        s04_num:       '第四步',
+        s04_title:     '綜合練習',
+        s04_desc:      '三項技能同時運用：完美打牌、保持計數、同步調整下注。',
+        pitch_1:       '大多數二十一點應用教完基本策略就結束了。redjack 更進一步——它教你從輸家變成贏家。',
+        pitch_2:       '支持简体中文及廣東話。',
+        footer_appstore: 'App Store',
+        footer_privacy: '隱私政策',
+        footer_copy:   '© 2026 redjack™。保留所有權利。',
+      },
+    };
+
+    function setLang(lang) {
+      const strings = STRINGS[lang] || STRINGS.en;
+
+      // Update all data-i18n elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (strings[key] !== undefined) el.textContent = strings[key];
+      });
+
+      // Hero h1 needs innerHTML (has <br> and <span>)
+      const h1 = document.getElementById('hero-h1');
+      if (h1) h1.innerHTML = strings.hero_h1;
+
+      // pitch_2 needs innerHTML (&amp;)
+      document.querySelectorAll('[data-i18n="pitch_2"]').forEach(el => {
+        el.innerHTML = strings.pitch_2;
+      });
+
+      // Update lang buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('onclick') === `setLang('${lang}')`);
+      });
+
+      // Update html lang attribute
+      document.documentElement.lang = lang === 'zh-Hans' ? 'zh-Hans' : lang === 'zh-Hant' ? 'zh-Hant' : 'en';
+
+      localStorage.setItem('rj-lang', lang);
+    }
+
+    // Auto-detect language on load
+    (function () {
+      const saved = localStorage.getItem('rj-lang');
+      const browser = navigator.language || '';
+      let lang = 'en';
+      if (saved && STRINGS[saved]) {
+        lang = saved;
+      } else if (browser.startsWith('zh-Hant') || browser === 'zh-TW' || browser === 'zh-HK') {
+        lang = 'zh-Hant';
+      } else if (browser.startsWith('zh')) {
+        lang = 'zh-Hans';
+      }
+      if (lang !== 'en') setLang(lang);
+    })();
+  </script>
 
 </body>
 </html>
