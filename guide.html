@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beginner's Guide to Card Counting — redjack</title>
+  <meta name="description" content="A beginner's guide to card counting: perfect strategy, Hi-Lo counting, bet spreads, and combined practice." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #eceae6;
+      --surface:    #f8f7f5;
+      --border:     #d4d0c8;
+      --red:        #c0152a;
+      --text:       #1a1a1a;
+      --text-sec:   #333333;
+      --text-muted: #888880;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-circle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900;
+      color: var(--red); letter-spacing: -1px;
+    }
+
+    .logo-text { font-size: 20px; font-weight: 900; color: var(--text); }
+
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+
+    nav a.back {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 14px; font-weight: 600;
+    }
+    nav a.back:hover { color: var(--red); }
+
+    .lang-switcher { display: flex; gap: 4px; }
+
+    .lang-btn {
+      background: none; border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 8px;
+      font-size: 11px; font-weight: 700;
+      color: var(--text-muted); cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
+    }
+    .lang-btn:hover { border-color: var(--red); color: var(--red); }
+    .lang-btn.active { border-color: var(--red); color: var(--red); background: rgba(192,21,42,0.06); }
+
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    h1 {
+      font-size: 36px; font-weight: 900;
+      color: var(--text); margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 15px; color: var(--text-muted);
+      margin-bottom: 56px;
+    }
+
+    .section { margin-bottom: 56px; }
+
+    .section-eyebrow {
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--red); margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 26px; font-weight: 900;
+      color: var(--text); margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    p {
+      font-size: 16px; color: var(--text-sec);
+      line-height: 1.75; margin-bottom: 16px;
+    }
+
+    .card-values {
+      background: var(--surface);
+      border: 2px solid var(--red);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin: 24px 0;
+    }
+
+    .card-value-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+    }
+
+    .card-value-row:last-child { border-bottom: none; }
+
+    .card-value-cards { color: var(--text); font-weight: 700; }
+    .card-value-num { font-weight: 900; font-size: 18px; }
+    .card-value-num.plus { color: var(--red); }
+    .card-value-num.zero { color: var(--text-muted); }
+    .card-value-num.minus { color: var(--text); }
+    .card-value-note { font-size: 12px; color: var(--text-muted); }
+
+    .bet-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    .bet-table th {
+      background: var(--text);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      text-align: left;
+    }
+
+    .bet-table td {
+      padding: 12px 20px;
+      font-size: 15px;
+      color: var(--text-sec);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bet-table tr:last-child td { border-bottom: none; }
+    .bet-table td:first-child { font-weight: 700; color: var(--text); }
+    .bet-table td:last-child { color: var(--red); font-weight: 800; }
+
+    .tiers {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .tier {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .tier-label {
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--red); white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .tier-desc { font-size: 15px; color: var(--text-sec); }
+
+    .cta {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .cta p {
+      font-size: 18px; color: var(--text-sec);
+      max-width: 520px; margin: 0 auto 32px;
+    }
+
+    .app-store-btn {
+      display: inline-block;
+      background: var(--red); color: #fff;
+      font-size: 15px; font-weight: 900;
+      padding: 16px 40px; border-radius: 12px;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .app-store-btn:hover { opacity: 0.85; }
+
+    footer {
+      padding: 40px; text-align: center;
+      font-size: 13px; color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    footer a { color: var(--red); text-decoration: none; }
+    footer a:hover { opacity: 0.75; }
+    footer .footer-links {
+      display: flex; justify-content: center;
+      gap: 24px; margin-bottom: 16px;
+    }
+
+    hr {
+      border: none; border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .content { padding: 48px 20px; }
+      .cta { padding: 48px 20px; }
+      footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="/">
+      <div class="logo-circle">rȷ</div>
+      <span class="logo-text">redjack</span>
+    </a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('zh-Hans')">简中</button>
+        <button class="lang-btn" onclick="setLang('zh-Hant')">繁中</button>
+      </div>
+      <a class="back" data-i18n="back" href="/">← Back</a>
+    </div>
+  </nav>
+
+  <div class="content">
+
+    <h1 data-i18n="page_title">Beginner's Guide to Card Counting</h1>
+    <p class="subtitle" data-i18n="page_sub">Everything you need to go from curious to counting.</p>
+
+    <div class="section">
+      <p class="section-eyebrow" data-i18n="s1_eyebrow">The Basics</p>
+      <h2 data-i18n="s1_title">What is Card Counting?</h2>
+      <p data-i18n="s1_p1">Card counting is a legal strategy used by skilled blackjack players to gain a mathematical edge over the casino. It works by tracking the ratio of high cards (10s and Aces) to low cards (2–6) remaining in the shoe. When the remaining deck is rich in high cards, the player has a statistical advantage and should bet more. When it's rich in low cards, the casino has the edge and you should bet the minimum.</p>
+      <p data-i18n="s1_p2">Contrary to popular belief, card counting doesn't require a photographic memory. It's a simple running tally anyone can learn with practice. Casinos don't like it, but it's completely legal.</p>
+    </div>
+
+    <hr />
+
+    <div class="section">
+      <p class="section-eyebrow" data-i18n="s2_eyebrow">Step One</p>
+      <h2 data-i18n="s2_title">Perfect Blackjack</h2>
+      <p data-i18n="s2_p1">Before you count a single card, you need to master basic strategy. This is the mathematically optimal play for every possible hand against every possible dealer upcard. Basic strategy reduces the house edge to around 0.5% — the lowest of any casino game.</p>
+      <p data-i18n="s2_p2">Most players lose more money to strategy mistakes than to bad luck. A wrong decision — hitting when you should stand, or failing to double when the math demands it — costs you real money over time. redjack drills every scenario until the right play becomes automatic.</p>
+      <p data-i18n="s2_p3"><strong>You cannot count cards effectively without first playing perfectly. Master this first.</strong></p>
+    </div>
+
+    <hr />
+
+    <div class="section">
+      <p class="section-eyebrow" data-i18n="s3_eyebrow">Step Two</p>
+      <h2 data-i18n="s3_title">Hi-Lo Counting</h2>
+      <p data-i18n="s3_intro">The Hi-Lo system assigns a value to every card as it's dealt:</p>
+
+      <div class="card-values">
+        <div class="card-value-row">
+          <span class="card-value-cards" data-i18n="hilo_low_cards">2 — 6</span>
+          <span class="card-value-num plus">+1</span>
+          <span class="card-value-note" data-i18n="hilo_low_note">Low cards — good for the dealer</span>
+        </div>
+        <div class="card-value-row">
+          <span class="card-value-cards" data-i18n="hilo_mid_cards">7 — 9</span>
+          <span class="card-value-num zero">0</span>
+          <span class="card-value-note" data-i18n="hilo_mid_note">Neutral — ignore these</span>
+        </div>
+        <div class="card-value-row">
+          <span class="card-value-cards" data-i18n="hilo_high_cards">10, J, Q, K, A</span>
+          <span class="card-value-num minus">−1</span>
+          <span class="card-value-note" data-i18n="hilo_high_note">High cards — good for you</span>
+        </div>
+      </div>
+
+      <p data-i18n="s3_p1">You keep a running total in your head called the Running Count as cards are dealt. A positive count means more high cards remain in the shoe, which favors you. A negative count favors the dealer.</p>
+      <p data-i18n="s3_p2">The True Count adjusts the running count for how many decks are left, giving you a more accurate picture of your edge. Divide the running count by the number of decks remaining to get the true count.</p>
+    </div>
+
+    <hr />
+
+    <div class="section">
+      <p class="section-eyebrow" data-i18n="s4_eyebrow">Step Three</p>
+      <h2 data-i18n="s4_title">Bet Spreads</h2>
+      <p data-i18n="s4_p1">Knowing the count is only valuable if you act on it. When the count is in your favor, you bet more. When it's not, you bet the minimum and wait.</p>
+
+      <table class="bet-table">
+        <thead>
+          <tr>
+            <th data-i18n="bet_tc">True Count</th>
+            <th data-i18n="bet_size">Bet Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-i18n="tc_le1">TC ≤ +1</td><td data-i18n="units_1">1 unit (minimum)</td></tr>
+          <tr><td>TC +2</td><td data-i18n="units_2">2 units</td></tr>
+          <tr><td>TC +3</td><td data-i18n="units_4">4 units</td></tr>
+          <tr><td>TC +4</td><td data-i18n="units_8">8 units</td></tr>
+          <tr><td data-i18n="tc_ge5">TC +5 or higher</td><td data-i18n="units_12">12 units (maximum)</td></tr>
+        </tbody>
+      </table>
+
+      <p data-i18n="s4_p2">Your betting unit is derived from your bankroll — typically 1/300th to 1/500th of your total blackjack bankroll. This keeps your risk of ruin low while maximizing your edge over time.</p>
+    </div>
+
+    <hr />
+
+    <div class="section">
+      <p class="section-eyebrow" data-i18n="s5_eyebrow">Step Four</p>
+      <h2 data-i18n="s5_title">Combined Practice</h2>
+      <p data-i18n="s5_p1">Once you can play perfect strategy automatically and maintain an accurate count under pressure, it's time to put it all together. In a real casino you're doing all three things simultaneously: playing perfectly, tracking the count, and sizing your bets — all while carrying on a conversation and not looking like you're counting.</p>
+      <p data-i18n="s5_p2">redjack builds this skill in three progressive tiers:</p>
+
+      <div class="tiers">
+        <div class="tier">
+          <span class="tier-label" data-i18n="tier1_label">Tier 1</span>
+          <span class="tier-desc" data-i18n="tier1_desc">Perfect strategy and count tracking together.</span>
+        </div>
+        <div class="tier">
+          <span class="tier-label" data-i18n="tier2_label">Tier 2</span>
+          <span class="tier-desc" data-i18n="tier2_desc">Add bet sizing based on the count.</span>
+        </div>
+        <div class="tier">
+          <span class="tier-label" data-i18n="tier3_label">Tier 3</span>
+          <span class="tier-desc" data-i18n="tier3_desc">Full game, no prompts. The real thing.</span>
+        </div>
+      </div>
+
+      <p data-i18n="s5_ending">Complete all three tiers and you're ready to walk into a casino and practice for real. That is: you're ready to play redjack.</p>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <p data-i18n="cta_p">Ready to start? redjack walks you through every step — from your first hand of basic strategy to your first perfect combined shoe.</p>
+    <a class="app-store-btn" href="https://apps.apple.com/app/redjack/id6762048051" target="_blank" data-i18n="cta_btn">Download on the App Store</a>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+      <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a>
+    </div>
+    <p data-i18n="footer_copy">© 2026 redjack™. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const STRINGS = {
+      en: {
+        back:           '← Back',
+        page_title:     "Beginner's Guide to Card Counting",
+        page_sub:       'Everything you need to go from curious to counting.',
+        s1_eyebrow:     'The Basics',
+        s1_title:       'What is Card Counting?',
+        s1_p1:          'Card counting is a legal strategy used by skilled blackjack players to gain a mathematical edge over the casino. It works by tracking the ratio of high cards (10s and Aces) to low cards (2–6) remaining in the shoe. When the remaining deck is rich in high cards, the player has a statistical advantage and should bet more. When it\'s rich in low cards, the casino has the edge and you should bet the minimum.',
+        s1_p2:          "Contrary to popular belief, card counting doesn't require a photographic memory. It's a simple running tally anyone can learn with practice. Casinos don't like it, but it's completely legal.",
+        s2_eyebrow:     'Step One',
+        s2_title:       'Perfect Blackjack',
+        s2_p1:          'Before you count a single card, you need to master basic strategy. This is the mathematically optimal play for every possible hand against every possible dealer upcard. Basic strategy reduces the house edge to around 0.5% — the lowest of any casino game.',
+        s2_p2:          'Most players lose more money to strategy mistakes than to bad luck. A wrong decision — hitting when you should stand, or failing to double when the math demands it — costs you real money over time. redjack drills every scenario until the right play becomes automatic.',
+        s2_p3:          'You cannot count cards effectively without first playing perfectly. Master this first.',
+        s3_eyebrow:     'Step Two',
+        s3_title:       'Hi-Lo Counting',
+        s3_intro:       'The Hi-Lo system assigns a value to every card as it\'s dealt:',
+        hilo_low_cards: '2 — 6',
+        hilo_low_note:  'Low cards — good for the dealer',
+        hilo_mid_cards: '7 — 9',
+        hilo_mid_note:  'Neutral — ignore these',
+        hilo_high_cards:'10, J, Q, K, A',
+        hilo_high_note: 'High cards — good for you',
+        s3_p1:          'You keep a running total in your head called the Running Count as cards are dealt. A positive count means more high cards remain in the shoe, which favors you. A negative count favors the dealer.',
+        s3_p2:          'The True Count adjusts the running count for how many decks are left, giving you a more accurate picture of your edge. Divide the running count by the number of decks remaining to get the true count.',
+        s4_eyebrow:     'Step Three',
+        s4_title:       'Bet Spreads',
+        s4_p1:          "Knowing the count is only valuable if you act on it. When the count is in your favor, you bet more. When it's not, you bet the minimum and wait.",
+        bet_tc:         'True Count',
+        bet_size:       'Bet Size',
+        tc_le1:         'TC ≤ +1',
+        units_1:        '1 unit (minimum)',
+        units_2:        '2 units',
+        units_4:        '4 units',
+        units_8:        '8 units',
+        tc_ge5:         'TC +5 or higher',
+        units_12:       '12 units (maximum)',
+        s4_p2:          'Your betting unit is derived from your bankroll — typically 1/300th to 1/500th of your total blackjack bankroll. This keeps your risk of ruin low while maximizing your edge over time.',
+        s5_eyebrow:     'Step Four',
+        s5_title:       'Combined Practice',
+        s5_p1:          "Once you can play perfect strategy automatically and maintain an accurate count under pressure, it's time to put it all together. In a real casino you're doing all three things simultaneously: playing perfectly, tracking the count, and sizing your bets — all while carrying on a conversation and not looking like you're counting.",
+        s5_p2:          'redjack builds this skill in three progressive tiers:',
+        tier1_label:    'Tier 1',
+        tier1_desc:     'Perfect strategy and count tracking together.',
+        tier2_label:    'Tier 2',
+        tier2_desc:     'Add bet sizing based on the count.',
+        tier3_label:    'Tier 3',
+        tier3_desc:     'Full game, no prompts. The real thing.',
+        s5_ending:      "Complete all three tiers and you're ready to walk into a casino and practice for real. That is: you're ready to play redjack.",
+        cta_p:          'Ready to start? redjack walks you through every step — from your first hand of basic strategy to your first perfect combined shoe.',
+        cta_btn:        'Download on the App Store',
+        footer_privacy: 'Privacy Policy',
+        footer_copy:    '© 2026 redjack™. All rights reserved.',
+      },
+      es: {
+        back:           '← Volver',
+        page_title:     'Guía para principiantes',
+        page_sub:       'Todo lo que necesitas para pasar de la curiosidad al conteo.',
+        s1_eyebrow:     'Lo básico',
+        s1_title:       '¿Qué es el conteo de cartas?',
+        s1_p1:          'El conteo de cartas es una estrategia legal utilizada por jugadores expertos de blackjack para obtener una ventaja matemática sobre el casino. Funciona rastreando la proporción de cartas altas (10s y Ases) frente a cartas bajas (2–6) que quedan en el zapato. Cuando quedan más cartas altas, el jugador tiene ventaja y debe apostar más. Cuando abundan las bajas, el casino tiene la ventaja y conviene apostar el mínimo.',
+        s1_p2:          'Contrariamente a la creencia popular, el conteo de cartas no requiere memoria fotográfica. Es un simple conteo corriente que cualquiera puede aprender con práctica. A los casinos no les gusta, pero es completamente legal.',
+        s2_eyebrow:     'Paso uno',
+        s2_title:       'Blackjack perfecto',
+        s2_p1:          'Antes de contar una sola carta, debes dominar la estrategia básica. Esta es la jugada matemáticamente óptima para cada mano posible frente a cada carta visible del crupier. La estrategia básica reduce la ventaja de la casa a alrededor del 0,5%, la más baja de cualquier juego de casino.',
+        s2_p2:          'La mayoría de los jugadores pierden más dinero por errores de estrategia que por mala suerte. Una decisión incorrecta cuesta dinero real a largo plazo. redjack entrena cada escenario hasta que la jugada correcta se vuelve automática.',
+        s2_p3:          'No puedes contar cartas eficazmente sin jugar primero de forma perfecta. Domina esto primero.',
+        s3_eyebrow:     'Paso dos',
+        s3_title:       'Conteo Hi-Lo',
+        s3_intro:       'El sistema Hi-Lo asigna un valor a cada carta a medida que se reparte:',
+        hilo_low_cards: '2 — 6',
+        hilo_low_note:  'Cartas bajas — favorecen al crupier',
+        hilo_mid_cards: '7 — 9',
+        hilo_mid_note:  'Neutras — ignóralas',
+        hilo_high_cards:'10, J, Q, K, A',
+        hilo_high_note: 'Cartas altas — te favorecen',
+        s3_p1:          'Mantienes un total corriente en tu cabeza llamado Conteo Corriente. Un conteo positivo significa que quedan más cartas altas en el zapato, lo que te favorece. Un conteo negativo favorece al crupier.',
+        s3_p2:          'El Conteo Verdadero ajusta el conteo corriente por el número de mazos restantes. Divide el conteo corriente entre los mazos restantes para obtener el conteo verdadero.',
+        s4_eyebrow:     'Paso tres',
+        s4_title:       'Apuestas escalonadas',
+        s4_p1:          'Conocer el conteo solo tiene valor si actúas en consecuencia. Cuando el conteo te favorece, apuestas más. Cuando no, apuestas el mínimo y esperas.',
+        bet_tc:         'Conteo verdadero',
+        bet_size:       'Apuesta',
+        tc_le1:         'CT ≤ +1',
+        units_1:        '1 unidad (mínimo)',
+        units_2:        '2 unidades',
+        units_4:        '4 unidades',
+        units_8:        '8 unidades',
+        tc_ge5:         'CT +5 o más',
+        units_12:       '12 unidades (máximo)',
+        s4_p2:          'Tu unidad de apuesta se deriva de tu bankroll: típicamente 1/300 a 1/500 de tu bankroll total de blackjack.',
+        s5_eyebrow:     'Paso cuatro',
+        s5_title:       'Práctica combinada',
+        s5_p1:          'Una vez que puedes jugar la estrategia perfecta automáticamente y mantener un conteo preciso bajo presión, es hora de unirlo todo. En un casino real haces las tres cosas simultáneamente: jugar perfectamente, rastrear el conteo y ajustar las apuestas.',
+        s5_p2:          'redjack desarrolla esta habilidad en tres niveles progresivos:',
+        tier1_label:    'Nivel 1',
+        tier1_desc:     'Estrategia perfecta y seguimiento del conteo juntos.',
+        tier2_label:    'Nivel 2',
+        tier2_desc:     'Añade el tamaño de las apuestas según el conteo.',
+        tier3_label:    'Nivel 3',
+        tier3_desc:     'Juego completo, sin ayudas. La situación real.',
+        s5_ending:      'Completa los tres niveles y estarás listo para entrar a un casino y practicar de verdad. Es decir: estás listo para jugar redjack.',
+        cta_p:          '¿Listo para empezar? redjack te guía paso a paso, desde tu primera mano de estrategia básica hasta tu primer zapato combinado perfecto.',
+        cta_btn:        'Descargar en el App Store',
+        footer_privacy: 'Política de privacidad',
+        footer_copy:    '© 2026 redjack™. Todos los derechos reservados.',
+      },
+      'zh-Hans': {
+        back:           '← 返回',
+        page_title:     '算牌入门指南',
+        page_sub:       '从零开始，掌握算牌所需的一切。',
+        s1_eyebrow:     '基础知识',
+        s1_title:       '什么是算牌？',
+        s1_p1:          '算牌是技术娴熟的二十一点玩家用来在数学上获得优于赌场优势的合法策略。它通过追踪牌靴中剩余高牌（10点和A）与低牌（2至6）的比例来实现。当剩余牌中高牌较多时，玩家具有统计优势，应增加下注。当低牌较多时，赌场占优，应保持最低下注。',
+        s1_p2:          '与普遍认知相反，算牌并不需要照相式记忆。这只是一个简单的累计计数，任何人经过练习都能学会。赌场不喜欢这种方式，但它完全合法。',
+        s2_eyebrow:     '第一步',
+        s2_title:       '完美二十一点',
+        s2_p1:          '在你计算第一张牌之前，你需要掌握基本策略。这是针对每一种可能的手牌对应庄家明牌的数学最优打法。基本策略将庄家优势降低到约0.5%，是所有赌场游戏中最低的。',
+        s2_p2:          '大多数玩家因策略失误而损失的钱比运气不好损失的还要多。一个错误的决定会长期让你付出真实代价。redjack 会训练每一个场景，直到正确的打法变得自然而然。',
+        s2_p3:          '在做到完美打法之前，你无法有效地算牌。先掌握这一点。',
+        s3_eyebrow:     '第二步',
+        s3_title:       '高低计数法',
+        s3_intro:       '高低系统在发牌时为每张牌赋予一个值：',
+        hilo_low_cards: '2 — 6',
+        hilo_low_note:  '低牌，对庄家有利',
+        hilo_mid_cards: '7 — 9',
+        hilo_mid_note:  '中性牌，忽略这些',
+        hilo_high_cards:'10、J、Q、K、A',
+        hilo_high_note: '高牌，对你有利',
+        s3_p1:          '你在脑中保持一个称为当前计数的累计数字。正计数意味着牌靴中剩余更多高牌，对你有利。负计数则对庄家有利。',
+        s3_p2:          '真实计数根据剩余牌靴数量调整当前计数。将当前计数除以剩余牌靴数即可得到真实计数。',
+        s4_eyebrow:     '第三步',
+        s4_title:       '押注幅度',
+        s4_p1:          '知道计数只有在你付诸行动时才有价值。当计数对你有利时，增加下注。当计数不利时，保持最低下注并等待。',
+        bet_tc:         '真实计数',
+        bet_size:       '下注大小',
+        tc_le1:         'TC ≤ +1',
+        units_1:        '1 单位（最低）',
+        units_2:        '2 单位',
+        units_4:        '4 单位',
+        units_8:        '8 单位',
+        tc_ge5:         'TC +5 或更高',
+        units_12:       '12 单位（最高）',
+        s4_p2:          '你的下注单位来源于你的本金，通常为你全部二十一点本金的 1/300 至 1/500。',
+        s5_eyebrow:     '第四步',
+        s5_title:       '综合练习',
+        s5_p1:          '一旦你能自动执行完美策略并在压力下保持准确计数，就该将所有技能综合起来了。在真实赌场中，你需要同时做三件事：完美打牌、追踪计数、调整下注。',
+        s5_p2:          'redjack 通过三个递进层次来培养这一技能：',
+        tier1_label:    '第一级',
+        tier1_desc:     '完美策略与计数追踪相结合。',
+        tier2_label:    '第二级',
+        tier2_desc:     '加入基于计数的下注规模。',
+        tier3_label:    '第三级',
+        tier3_desc:     '完整游戏，无提示。真实情景。',
+        s5_ending:      '完成全部三个层次，你就可以走进赌场在那里实战练习了。也就是说：你已经准备好玩 redjack 了。',
+        cta_p:          '准备好开始了吗？redjack 带你一步一步走过每个阶段，从基本策略的第一手牌到第一副完美综合发牌鞋。',
+        cta_btn:        '在 App Store 下载',
+        footer_privacy: '隐私政策',
+        footer_copy:    '© 2026 redjack™。保留所有权利。',
+      },
+      'zh-Hant': {
+        back:           '← 返回',
+        page_title:     '算牌入門指南',
+        page_sub:       '從零開始，掌握算牌所需的一切。',
+        s1_eyebrow:     '基礎知識',
+        s1_title:       '什麼是算牌？',
+        s1_p1:          '算牌是技術嫻熟的二十一點玩家用來在數學上獲得優於賭場優勢的合法策略。它透過追蹤牌靴中剩餘高牌（10點和A）與低牌（2至6）的比例來實現。當剩餘牌中高牌較多時，玩家具有統計優勢，應增加下注。當低牌較多時，賭場佔優，應保持最低下注。',
+        s1_p2:          '與普遍認知相反，算牌並不需要照相式記憶。這只是一個簡單的累計計數，任何人經過練習都能學會。賭場不喜歡這種方式，但它完全合法。',
+        s2_eyebrow:     '第一步',
+        s2_title:       '完美二十一點',
+        s2_p1:          '在你計算第一張牌之前，你需要掌握基本策略。這是針對每一種可能的手牌對應莊家明牌的數學最優打法。基本策略將莊家優勢降低到約0.5%，是所有賭場遊戲中最低的。',
+        s2_p2:          '大多數玩家因策略失誤而損失的錢比運氣不好損失的還要多。一個錯誤的決定會長期讓你付出真實代價。redjack 會訓練每一個場景，直到正確的打法變得自然而然。',
+        s2_p3:          '在做到完美打法之前，你無法有效地算牌。先掌握這一點。',
+        s3_eyebrow:     '第二步',
+        s3_title:       '高低計數法',
+        s3_intro:       '高低系統在發牌時為每張牌賦予一個值：',
+        hilo_low_cards: '2 — 6',
+        hilo_low_note:  '低牌，對莊家有利',
+        hilo_mid_cards: '7 — 9',
+        hilo_mid_note:  '中性牌，忽略這些',
+        hilo_high_cards:'10、J、Q、K、A',
+        hilo_high_note: '高牌，對你有利',
+        s3_p1:          '你在腦中保持一個稱為當前計數的累計數字。正計數意味著牌靴中剩餘更多高牌，對你有利。負計數則對莊家有利。',
+        s3_p2:          '真實計數根據剩餘牌靴數量調整當前計數。將當前計數除以剩餘牌靴數即可得到真實計數。',
+        s4_eyebrow:     '第三步',
+        s4_title:       '押注幅度',
+        s4_p1:          '知道計數只有在你付諸行動時才有價值。當計數對你有利時，增加下注。當計數不利時，保持最低下注並等待。',
+        bet_tc:         '真實計數',
+        bet_size:       '下注大小',
+        tc_le1:         'TC ≤ +1',
+        units_1:        '1 單位（最低）',
+        units_2:        '2 單位',
+        units_4:        '4 單位',
+        units_8:        '8 單位',
+        tc_ge5:         'TC +5 或更高',
+        units_12:       '12 單位（最高）',
+        s4_p2:          '你的下注單位來源於你的本金，通常為你全部二十一點本金的 1/300 至 1/500。',
+        s5_eyebrow:     '第四步',
+        s5_title:       '綜合練習',
+        s5_p1:          '一旦你能自動執行完美策略並在壓力下保持準確計數，就該將所有技能綜合起來了。在真實賭場中，你需要同時做三件事：完美打牌、追蹤計數、調整下注。',
+        s5_p2:          'redjack 透過三個遞進層次來培養這一技能：',
+        tier1_label:    '第一級',
+        tier1_desc:     '完美策略與計數追蹤相結合。',
+        tier2_label:    '第二級',
+        tier2_desc:     '加入基於計數的下注規模。',
+        tier3_label:    '第三級',
+        tier3_desc:     '完整遊戲，無提示。真實情景。',
+        s5_ending:      '完成全部三個層次，你就可以走進賭場在那裡實戰練習了。也就是說：你已經準備好玩 redjack 了。',
+        cta_p:          '準備好開始了嗎？redjack 帶你一步一步走過每個階段，從基本策略的第一手牌到第一副完美綜合發牌鞋。',
+        cta_btn:        '在 App Store 下載',
+        footer_privacy: '隱私政策',
+        footer_copy:    '© 2026 redjack™。保留所有權利。',
+      },
+    };
+
+    function setLang(lang) {
+      const strings = STRINGS[lang] || STRINGS.en;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (strings[key] !== undefined) el.textContent = strings[key];
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('onclick') === `setLang('${lang}')`);
+      });
+      document.documentElement.lang = lang === 'zh-Hans' ? 'zh-Hans' : lang === 'zh-Hant' ? 'zh-Hant' : lang === 'es' ? 'es' : 'en';
+      localStorage.setItem('rj-lang', lang);
+    }
+
+    (function () {
+      const saved = localStorage.getItem('rj-lang');
+      const browser = navigator.language || '';
+      let lang = 'en';
+      if (saved && STRINGS[saved]) {
+        lang = saved;
+      } else if (browser.startsWith('zh-Hant') || browser === 'zh-TW' || browser === 'zh-HK') {
+        lang = 'zh-Hant';
+      } else if (browser.startsWith('zh')) {
+        lang = 'zh-Hans';
+      } else if (browser.startsWith('es')) {
+        lang = 'es';
+      }
+      if (lang !== 'en') setLang(lang);
+    })();
+  </script>
+
+</body>
+</html>
