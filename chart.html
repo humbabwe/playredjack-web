@@ -318,52 +318,116 @@
       footer .footer-links { flex-wrap: wrap; gap: 10px; }
     }
 
+    /* ── Print Card (hidden on screen) ── */
+    .print-card { display: none; }
+
     /* ── Print ── */
     @media print {
+      @page { margin: 0.3in; }
+
       body { background: #fff; }
 
-      .page-col { box-shadow: none; max-width: 100%; background: #fff; }
+      /* Hide everything, show only the print card */
+      nav, .content, footer { display: none !important; }
+      .page-col { box-shadow: none; background: #fff; max-width: 100%; }
+      .print-card { display: block; max-width: 3.4in; margin: 0 auto; }
 
-      nav, .controls, footer, .notes { display: none !important; }
-
-      .content { padding: 10px 14px; }
-
-      .section-eyebrow { font-size: 9px; margin-bottom: 4px; }
-      h1 { font-size: 20px; margin-bottom: 4px; }
-      .subtitle { font-size: 11px; margin-bottom: 12px; }
-
-      .legend {
-        padding: 8px 12px;
-        margin-bottom: 12px;
-        gap: 4px 10px;
-      }
-      .legend-item { font-size: 9px; }
-      .legend-swatch { width: 22px; height: 16px; font-size: 8px; }
-
-      .chart-section { margin-bottom: 14px; page-break-inside: avoid; }
-      .chart-section h2 { font-size: 13px; margin-bottom: 6px; }
-
-      .table-wrap { border-radius: 4px; }
-
-      .strategy-table { min-width: 0; }
-      .strategy-table thead tr:first-child th { padding: 4px 6px; font-size: 8px; }
-      .strategy-table thead tr:last-child th { padding: 5px 6px; font-size: 10px; min-width: 24px; }
-      .strategy-table td { padding: 4px 5px; font-size: 9px; min-width: 24px; }
-      .strategy-table td.hand-cell { padding-left: 8px; font-size: 9px; }
-
-      /* Force practice hidden cells to show their colors when printing */
-      .practice-mode .cell.hidden-cell {
-        background: inherit !important;
-        color: inherit !important;
-        cursor: default;
+      /* ── Compact card table ── */
+      .pt-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+        font-size: 6.5pt;
+        table-layout: fixed;
       }
 
-      .cell-h  { background: #c0152a !important; color: #ffffff !important; }
-      .cell-s  { background: #1a1a1a !important; color: #ffffff !important; }
-      .cell-d  { background: #7a0d1a !important; color: #ffffff !important; }
-      .cell-ds { background: #7a0d1a !important; color: #ffffff !important; }
-      .cell-p  { background: #f0eeea !important; color: #1a1a1a !important; }
-      .cell-r  { background: #888880 !important; color: #ffffff !important; }
+      .pt-table th {
+        background: #1a1a1a;
+        color: #fff;
+        font-size: 6pt;
+        font-weight: 800;
+        padding: 2pt 1pt;
+        text-align: center;
+        border: 0.5pt solid #444;
+        letter-spacing: 0;
+      }
+
+      .pt-table th.pt-corner {
+        background: #2a2a2a;
+        color: #aaa;
+        font-size: 5pt;
+        letter-spacing: 0.3pt;
+        text-transform: uppercase;
+      }
+
+      .pt-table td {
+        padding: 1.5pt 0;
+        text-align: center;
+        font-size: 6.5pt;
+        font-weight: 800;
+        border: 0.5pt solid rgba(0,0,0,0.18);
+        line-height: 1;
+      }
+
+      .pt-table td.pt-hand {
+        background: #2a2a2a;
+        color: #fff;
+        font-size: 6pt;
+        font-weight: 700;
+        padding-left: 2pt;
+        text-align: left;
+        border-color: #444;
+      }
+
+      /* Section dividers: thick top border on first row of Soft and Pairs */
+      .pt-table tr.pt-section-start td {
+        border-top: 2pt solid #555 !important;
+      }
+
+      /* Action colors — same as app */
+      .pt-table .cell-h  { background: #c0152a; color: #fff; }
+      .pt-table .cell-s  { background: #1a1a1a; color: #fff; }
+      .pt-table .cell-d  { background: #7a0d1a; color: #fff; }
+      .pt-table .cell-ds { background: #7a0d1a; color: #fff; }
+      .pt-table .cell-p  { background: #f0eeea; color: #1a1a1a; }
+      .pt-table .cell-r  { background: #888880; color: #fff; }
+
+      /* Legend strip */
+      .pt-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2pt 6pt;
+        margin-top: 4pt;
+        font-size: 5.5pt;
+        font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+        color: #333;
+      }
+
+      .pt-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 2pt;
+      }
+
+      .pt-swatch {
+        display: inline-block;
+        width: 10pt; height: 8pt;
+        border-radius: 1pt;
+        text-align: center;
+        font-size: 5pt;
+        font-weight: 900;
+        line-height: 8pt;
+        border: 0.3pt solid rgba(0,0,0,0.2);
+      }
+
+      /* Footer note */
+      .pt-note {
+        margin-top: 3pt;
+        font-size: 5pt;
+        color: #999;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      }
     }
   </style>
 </head>
@@ -446,6 +510,9 @@
     </div>
     <p data-i18n="footer_copy">© 2026 redjack™. All rights reserved.</p>
   </footer>
+
+  <!-- Compact print card — hidden on screen, shown only in @media print -->
+  <div class="print-card" id="print-card" aria-hidden="true"></div>
 
   </div><!-- .page-col -->
 
@@ -645,6 +712,7 @@
       buildTable('hard-table',  HARD,  lang);
       buildTable('soft-table',  SOFT,  lang);
       buildTable('pairs-table', PAIRS, lang);
+      buildPrintTable(lang);
 
       if (practiceMode) applyPracticeMode();
     }
@@ -730,6 +798,85 @@
       ).join('');
     }
 
+    // ── Print Card Builder ────────────────────────────────────────────────────
+    function buildPrintTable(lang) {
+      const card = document.getElementById('print-card');
+      card.innerHTML = '';
+
+      // Single combined table
+      const table = document.createElement('table');
+      table.className = 'pt-table';
+
+      // One header row: corner + dealer upcards
+      const thead = document.createElement('thead');
+      const trH = document.createElement('tr');
+      const corner = document.createElement('th');
+      corner.className = 'pt-corner';
+      corner.textContent = '↓ / →';
+      trH.appendChild(corner);
+      DEALERS.forEach(d => {
+        const th = document.createElement('th');
+        th.textContent = d;
+        trH.appendChild(th);
+      });
+      thead.appendChild(trH);
+      table.appendChild(thead);
+
+      // All data rows: HARD, then SOFT, then PAIRS
+      // First row of SOFT and PAIRS get class pt-section-start for the thick divider
+      const tbody = document.createElement('tbody');
+
+      function appendRows(data, isFirstSection) {
+        data.forEach((row, i) => {
+          const tr = document.createElement('tr');
+          if (i === 0 && !isFirstSection) tr.className = 'pt-section-start';
+
+          const handTd = document.createElement('td');
+          handTd.className = 'pt-hand';
+          handTd.textContent = row.hand;
+          tr.appendChild(handTd);
+
+          row.cells.forEach(action => {
+            const td = document.createElement('td');
+            td.className = ACTION_CLASS[action];
+            td.textContent = action;
+            tr.appendChild(td);
+          });
+
+          tbody.appendChild(tr);
+        });
+      }
+
+      appendRows(HARD,  true);
+      appendRows(SOFT,  false);
+      appendRows(PAIRS, false);
+
+      table.appendChild(tbody);
+      card.appendChild(table);
+
+      // Legend strip
+      const legend = document.createElement('div');
+      legend.className = 'pt-legend';
+      const legendItems = [
+        { cls: 'cell-h',  a: 'H',  label: 'Hit'         },
+        { cls: 'cell-s',  a: 'S',  label: 'Stand'       },
+        { cls: 'cell-d',  a: 'D',  label: 'Double/Hit'  },
+        { cls: 'cell-ds', a: 'Ds', label: 'Double/Std'  },
+        { cls: 'cell-p',  a: 'P',  label: 'Split'       },
+        { cls: 'cell-r',  a: 'R',  label: 'Surrender'   },
+      ];
+      legend.innerHTML = legendItems.map(item =>
+        `<div class="pt-legend-item"><span class="pt-swatch ${item.cls}">${item.a}</span>${item.label}</div>`
+      ).join('');
+      card.appendChild(legend);
+
+      // Footer note
+      const note = document.createElement('p');
+      note.className = 'pt-note';
+      note.textContent = '6-deck · dealer stands on soft 17 · late surrender · double after split  ·  playredjack.com';
+      card.appendChild(note);
+    }
+
     // ── Practice Mode ─────────────────────────────────────────────────────────
     let practiceMode = false;
 
@@ -794,13 +941,8 @@
 
     // ── Print ─────────────────────────────────────────────────────────────────
     function printChart() {
-      const wasPracticing = practiceMode;
-      if (wasPracticing) exitPracticeMode();
+      // Print card is a separate pre-built element — no need to touch practice mode
       window.print();
-      if (wasPracticing) {
-        practiceMode = true;
-        applyPracticeMode();
-      }
     }
 
     // ── Init ──────────────────────────────────────────────────────────────────
