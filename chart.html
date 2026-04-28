@@ -810,7 +810,7 @@
     }
 
     // ── Print Card Builder ────────────────────────────────────────────────────
-    const PRINT_LABEL = { H:'H', S:'St', D:'D', Ds:'D', P:'Sp', R:'Su' };
+    const PRINT_LABEL = { H:'H', S:'St', D:'D/H', Ds:'D/S', P:'Sp', R:'Su' };
 
     function buildPrintTable(lang) {
       const card = document.getElementById('print-card');
@@ -871,11 +871,12 @@
       const legend = document.createElement('div');
       legend.className = 'pt-legend';
       const legendItems = [
-        { cls: 'cell-h',  a: 'H',  label: 'Hit'          },
-        { cls: 'cell-s',  a: 'St', label: 'Stand'        },
-        { cls: 'cell-d',  a: 'D',  label: 'Double'       },
-        { cls: 'cell-p',  a: 'Sp', label: 'Split'        },
-        { cls: 'cell-r',  a: 'Su', label: 'Surrender'    },
+        { cls: 'cell-h',  a: 'H',   label: 'Hit'              },
+        { cls: 'cell-s',  a: 'St',  label: 'Stand'            },
+        { cls: 'cell-d',  a: 'D/H', label: 'Double else Hit'  },
+        { cls: 'cell-ds', a: 'D/S', label: 'Double else Stand'},
+        { cls: 'cell-p',  a: 'Sp',  label: 'Split'            },
+        { cls: 'cell-r',  a: 'Su',  label: 'Surrender'        },
       ];
       legend.innerHTML = legendItems.map(item =>
         `<div class="pt-legend-item"><span class="pt-swatch ${item.cls}">${item.a}</span>${item.label}</div>`
