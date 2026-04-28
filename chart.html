@@ -376,13 +376,15 @@
       }
 
       .pt-table td.pt-hand {
-        background: #2a2a2a;
-        color: #fff;
+        background: #ffffff !important;
+        color: #111 !important;
         font-size: 6pt;
-        font-weight: 700;
+        font-weight: 600;
         padding-left: 2pt;
         text-align: left;
-        border-color: #444;
+        border-color: rgba(0,0,0,0.18);
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
       }
 
       /* Section dividers: thick top border on first row of Soft and Pairs */
@@ -398,12 +400,13 @@
       .pt-table .cell-p  { background: #bebebe !important; color: #111 !important; }
       .pt-table .cell-r  { background: #a4a4a4 !important; color: #111 !important; }
 
-      /* Legend strip */
+      /* Legend strip — two rows of three, centered */
       .pt-legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2pt 6pt;
-        margin-top: 4pt;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-content: center;
+        gap: 2pt 10pt;
+        margin-top: 5pt;
         font-size: 5.5pt;
         font-weight: 400;
         font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
@@ -413,12 +416,12 @@
       .pt-legend-item {
         display: flex;
         align-items: center;
-        gap: 2pt;
+        gap: 2.5pt;
       }
 
       .pt-swatch {
         display: inline-block;
-        width: 10pt; height: 8pt;
+        width: 12pt; height: 8pt;
         border-radius: 1pt;
         text-align: center;
         font-size: 5pt;
@@ -429,6 +432,14 @@
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
       }
+
+      /* Swatch shades match chart cell shades */
+      .pt-swatch.cell-h  { background: #f2f2f2 !important; }
+      .pt-swatch.cell-s  { background: #8a8a8a !important; }
+      .pt-swatch.cell-d  { background: #d8d8d8 !important; }
+      .pt-swatch.cell-ds { background: #d8d8d8 !important; }
+      .pt-swatch.cell-p  { background: #bebebe !important; }
+      .pt-swatch.cell-r  { background: #a4a4a4 !important; }
 
       /* Footer note */
       .pt-note {
