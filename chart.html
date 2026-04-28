@@ -801,6 +801,8 @@
     }
 
     // ── Print Card Builder ────────────────────────────────────────────────────
+    const PRINT_LABEL = { H:'H', S:'St', D:'D', Ds:'D', P:'Sp', R:'Su' };
+
     function buildPrintTable(lang) {
       const card = document.getElementById('print-card');
       card.innerHTML = '';
@@ -841,7 +843,7 @@
           row.cells.forEach(action => {
             const td = document.createElement('td');
             td.className = ACTION_CLASS[action];
-            td.textContent = action;
+            td.textContent = PRINT_LABEL[action];
             tr.appendChild(td);
           });
 
@@ -860,12 +862,11 @@
       const legend = document.createElement('div');
       legend.className = 'pt-legend';
       const legendItems = [
-        { cls: 'cell-h',  a: 'H',  label: 'Hit'         },
-        { cls: 'cell-s',  a: 'S',  label: 'Stand'       },
-        { cls: 'cell-d',  a: 'D',  label: 'Double/Hit'  },
-        { cls: 'cell-ds', a: 'Ds', label: 'Double/Std'  },
-        { cls: 'cell-p',  a: 'P',  label: 'Split'       },
-        { cls: 'cell-r',  a: 'R',  label: 'Surrender'   },
+        { cls: 'cell-h',  a: 'H',  label: 'Hit'          },
+        { cls: 'cell-s',  a: 'St', label: 'Stand'        },
+        { cls: 'cell-d',  a: 'D',  label: 'Double'       },
+        { cls: 'cell-p',  a: 'Sp', label: 'Split'        },
+        { cls: 'cell-r',  a: 'Su', label: 'Surrender'    },
       ];
       legend.innerHTML = legendItems.map(item =>
         `<div class="pt-legend-item"><span class="pt-swatch ${item.cls}">${item.a}</span>${item.label}</div>`
