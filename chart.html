@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Strategy Chart — redjack</title>
+  <meta name="description" content="Complete basic strategy chart for 6-deck blackjack. Hard totals, soft totals, and pairs. Practice mode and printable version included." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; max-width: 100%; }
+
+    :root {
+      --bg:         #eceae6;
+      --surface:    #f8f7f5;
+      --border:     #d4d0c8;
+      --red:        #c0152a;
+      --text:       #1a1a1a;
+      --text-sec:   #333333;
+      --text-muted: #888880;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: url('https://images.unsplash.com/photo-1501003878151-d3cb87799705?w=2400&q=85&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+    }
+
+    .page-col {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      background: var(--bg);
+      min-height: 100vh;
+      box-shadow: 0 0 60px rgba(0,0,0,0.35);
+      overflow-x: hidden;
+    }
+
+    @media (max-width: 1100px) {
+      body { background-image: none; }
+      .page-col { box-shadow: none; }
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-circle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900;
+      color: var(--red); letter-spacing: -1px;
+    }
+
+    .logo-text { font-size: 20px; font-weight: 900; color: var(--text); }
+
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+
+    nav a.back {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 14px; font-weight: 600;
+    }
+    nav a.back:hover { color: var(--red); }
+
+    .lang-switcher { display: flex; gap: 4px; }
+
+    .lang-btn {
+      background: none; border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 8px;
+      font-size: 11px; font-weight: 700;
+      color: var(--text-muted); cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
+    }
+    .lang-btn:hover { border-color: var(--red); color: var(--red); }
+    .lang-btn.active { border-color: var(--red); color: var(--red); background: rgba(192,21,42,0.06); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px 80px;
+    }
+
+    .section-eyebrow {
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--red); margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 36px; font-weight: 900;
+      color: var(--text); margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 15px; color: var(--text-muted);
+      margin-bottom: 36px; line-height: 1.6;
+    }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      margin-bottom: 28px;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .legend-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 600; color: var(--text-sec);
+    }
+
+    .legend-swatch {
+      width: 32px; height: 22px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 900;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+      align-items: center;
+    }
+
+    .ctrl-btn {
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all 0.15s;
+      font-family: inherit;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      color: var(--text-sec);
+    }
+
+    .ctrl-btn:hover { border-color: var(--red); color: var(--red); }
+    .ctrl-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+    .ctrl-btn.gone { display: none; }
+
+    /* ── Chart Sections ── */
+    .chart-section { margin-bottom: 44px; }
+
+    .chart-section h2 {
+      font-size: 20px; font-weight: 900;
+      color: var(--text); margin-bottom: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+    }
+
+    .strategy-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      min-width: 480px;
+    }
+
+    .strategy-table thead tr:first-child th {
+      background: var(--red);
+      color: #fff;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 7px 10px; text-align: center;
+    }
+
+    .strategy-table thead tr:first-child th.hand-corner {
+      background: #2a2a2a;
+    }
+
+    .strategy-table thead tr:last-child th {
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 12px; font-weight: 900;
+      padding: 8px 10px; text-align: center;
+      min-width: 38px;
+    }
+
+    .strategy-table thead tr:last-child th.hand-header {
+      text-align: left;
+      padding-left: 14px;
+      min-width: 60px;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: #aaa;
+    }
+
+    .strategy-table td {
+      padding: 7px 8px;
+      text-align: center;
+      font-size: 11px; font-weight: 900;
+      border: 1px solid rgba(0,0,0,0.055);
+      transition: background 0.12s;
+      user-select: none;
+      min-width: 38px;
+    }
+
+    .strategy-table td.hand-cell {
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 11px; font-weight: 800;
+      text-align: left;
+      padding-left: 14px;
+      border-color: rgba(255,255,255,0.06);
+    }
+
+    /* ── Action Colors ── */
+    .cell-h  { background: #fde8e8; color: #8b1c24; }
+    .cell-s  { background: #e2f0e5; color: #1b5427; }
+    .cell-d  { background: #ddeeff; color: #1a4070; }
+    .cell-ds { background: #eae8ff; color: #38368a; }
+    .cell-p  { background: #fef5d0; color: #7a5500; }
+    .cell-r  { background: #eaeaea; color: #555555; }
+
+    /* ── Practice Mode ── */
+    .practice-mode .cell.hidden-cell {
+      background: #edebe7 !important;
+      color: var(--text-muted) !important;
+      cursor: pointer;
+      letter-spacing: 0;
+    }
+
+    .practice-mode .cell.hidden-cell:hover {
+      background: #e2e0db !important;
+      color: var(--text) !important;
+    }
+
+    @keyframes cellFlash {
+      0%   { outline: 2px solid var(--red); outline-offset: -2px; }
+      70%  { outline: 2px solid var(--red); outline-offset: -2px; }
+      100% { outline: 2px solid transparent; outline-offset: -2px; }
+    }
+
+    .cell.just-revealed {
+      animation: cellFlash 0.55s ease forwards;
+    }
+
+    /* ── Notes ── */
+    .notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 4px;
+    }
+
+    .notes p {
+      font-size: 13px; color: var(--text-muted);
+      line-height: 1.65; margin-bottom: 6px;
+    }
+
+    .notes p:last-child { margin-bottom: 0; }
+    .notes strong { color: var(--text-sec); font-weight: 700; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    footer a { color: var(--red); text-decoration: none; }
+    footer a:hover { opacity: 0.75; }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    /* ── Mobile Nav ── */
+    @media (max-width: 680px) {
+      nav {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 14px 20px;
+        gap: 10px;
+      }
+      .logo { align-self: center; }
+      .nav-right { width: 100%; justify-content: space-between; }
+    }
+
+    @media (max-width: 600px) {
+      .content { padding: 36px 20px 60px; }
+      footer { padding: 32px 20px; }
+      footer .footer-links { flex-wrap: wrap; gap: 10px; }
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; }
+
+      .page-col { box-shadow: none; max-width: 100%; background: #fff; }
+
+      nav, .controls, footer, .notes { display: none !important; }
+
+      .content { padding: 10px 14px; }
+
+      .section-eyebrow { font-size: 9px; margin-bottom: 4px; }
+      h1 { font-size: 20px; margin-bottom: 4px; }
+      .subtitle { font-size: 11px; margin-bottom: 12px; }
+
+      .legend {
+        padding: 8px 12px;
+        margin-bottom: 12px;
+        gap: 4px 10px;
+      }
+      .legend-item { font-size: 9px; }
+      .legend-swatch { width: 22px; height: 16px; font-size: 8px; }
+
+      .chart-section { margin-bottom: 14px; page-break-inside: avoid; }
+      .chart-section h2 { font-size: 13px; margin-bottom: 6px; }
+
+      .table-wrap { border-radius: 4px; }
+
+      .strategy-table { min-width: 0; }
+      .strategy-table thead tr:first-child th { padding: 4px 6px; font-size: 8px; }
+      .strategy-table thead tr:last-child th { padding: 5px 6px; font-size: 10px; min-width: 24px; }
+      .strategy-table td { padding: 4px 5px; font-size: 9px; min-width: 24px; }
+      .strategy-table td.hand-cell { padding-left: 8px; font-size: 9px; }
+
+      /* Force practice hidden cells to show their colors when printing */
+      .practice-mode .cell.hidden-cell {
+        background: inherit !important;
+        color: inherit !important;
+        cursor: default;
+      }
+
+      .cell-h  { background: #fde8e8 !important; color: #8b1c24 !important; }
+      .cell-s  { background: #e2f0e5 !important; color: #1b5427 !important; }
+      .cell-d  { background: #ddeeff !important; color: #1a4070 !important; }
+      .cell-ds { background: #eae8ff !important; color: #38368a !important; }
+      .cell-p  { background: #fef5d0 !important; color: #7a5500 !important; }
+      .cell-r  { background: #eaeaea !important; color: #555555 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-col">
+
+  <nav>
+    <a class="logo" href="/">
+      <div class="logo-circle">rȷ</div>
+      <span class="logo-text">redjack</span>
+    </a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('zh-Hans')">简中</button>
+        <button class="lang-btn" onclick="setLang('zh-Hant')">繁中</button>
+      </div>
+      <a class="back" data-i18n="back" href="/">← Back</a>
+    </div>
+  </nav>
+
+  <div class="content">
+
+    <p class="section-eyebrow" data-i18n="eyebrow_lbl">Perfect Strategy</p>
+    <h1 data-i18n="page_title">Basic Strategy Chart</h1>
+    <p class="subtitle" data-i18n="page_sub">6-deck · dealer stands on soft 17 · late surrender · double after split allowed</p>
+
+    <!-- Legend -->
+    <div class="legend" id="legend"></div>
+
+    <!-- Controls -->
+    <div class="controls no-print">
+      <button class="ctrl-btn" id="practice-btn" onclick="togglePractice()" data-i18n="btn_practice">Practice Mode</button>
+      <button class="ctrl-btn gone" id="reveal-btn" onclick="revealAll()" data-i18n="btn_reveal">Reveal All</button>
+      <button class="ctrl-btn gone" id="reset-btn" onclick="resetPractice()" data-i18n="btn_reset">Reset</button>
+      <button class="ctrl-btn" onclick="printChart()" data-i18n="btn_print">Print Chart</button>
+    </div>
+
+    <!-- Hard Totals -->
+    <div class="chart-section">
+      <h2 data-i18n="hard_title">Hard Totals</h2>
+      <div class="table-wrap">
+        <table class="strategy-table" id="hard-table"></table>
+      </div>
+    </div>
+
+    <!-- Soft Totals -->
+    <div class="chart-section">
+      <h2 data-i18n="soft_title">Soft Totals</h2>
+      <div class="table-wrap">
+        <table class="strategy-table" id="soft-table"></table>
+      </div>
+    </div>
+
+    <!-- Pairs -->
+    <div class="chart-section">
+      <h2 data-i18n="pairs_title">Pairs</h2>
+      <div class="table-wrap">
+        <table class="strategy-table" id="pairs-table"></table>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="notes">
+      <p><strong data-i18n="notes_label">Rules for this chart:</strong> <span data-i18n="notes_1">6-deck shoe, dealer stands on soft 17, late surrender available, double after split allowed.</span></p>
+      <p data-i18n="notes_2"><strong>D</strong> = Double if allowed, otherwise Hit &nbsp;·&nbsp; <strong>Ds</strong> = Double if allowed, otherwise Stand &nbsp;·&nbsp; <strong>R</strong> = Surrender if allowed, otherwise Hit</p>
+      <p data-i18n="notes_3">Memorize this chart first. Once you know every cell cold, move on to Hi-Lo counting in redjack.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/" data-i18n="footer_home">Home</a>
+      <a href="/guide.html" data-i18n="footer_guide">Beginner's Guide</a>
+      <a href="/privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+      <a href="mailto:hitme@playredjack.com">hitme@playredjack.com</a>
+    </div>
+    <p data-i18n="footer_copy">© 2026 redjack™. All rights reserved.</p>
+  </footer>
+
+  </div><!-- .page-col -->
+
+  <script>
+    // ── Chart Data ───────────────────────────────────────────────────────────
+    const DEALERS = ['2','3','4','5','6','7','8','9','10','A'];
+
+    const HARD = [
+      { hand: '8',   cells: ['H','H','H','H','H','H','H','H','H','H'] },
+      { hand: '9',   cells: ['H','D','D','D','D','H','H','H','H','H'] },
+      { hand: '10',  cells: ['D','D','D','D','D','D','D','D','H','H'] },
+      { hand: '11',  cells: ['D','D','D','D','D','D','D','D','D','H'] },
+      { hand: '12',  cells: ['H','H','S','S','S','H','H','H','H','H'] },
+      { hand: '13',  cells: ['S','S','S','S','S','H','H','H','H','H'] },
+      { hand: '14',  cells: ['S','S','S','S','S','H','H','H','H','H'] },
+      { hand: '15',  cells: ['S','S','S','S','S','H','H','H','R','R'] },
+      { hand: '16',  cells: ['S','S','S','S','S','H','H','R','R','R'] },
+      { hand: '17+', cells: ['S','S','S','S','S','S','S','S','S','S'] },
+    ];
+
+    const SOFT = [
+      { hand: 'A,2', cells: ['H','H','H','D','D','H','H','H','H','H'] },
+      { hand: 'A,3', cells: ['H','H','H','D','D','H','H','H','H','H'] },
+      { hand: 'A,4', cells: ['H','H','D','D','D','H','H','H','H','H'] },
+      { hand: 'A,5', cells: ['H','H','D','D','D','H','H','H','H','H'] },
+      { hand: 'A,6', cells: ['H','D','D','D','D','H','H','H','H','H'] },
+      { hand: 'A,7', cells: ['S','Ds','Ds','Ds','Ds','S','S','H','H','H'] },
+      { hand: 'A,8', cells: ['S','S','S','S','S','S','S','S','S','S'] },
+      { hand: 'A,9', cells: ['S','S','S','S','S','S','S','S','S','S'] },
+    ];
+
+    const PAIRS = [
+      { hand: '2,2',   cells: ['P','P','P','P','P','P','H','H','H','H'] },
+      { hand: '3,3',   cells: ['P','P','P','P','P','P','H','H','H','H'] },
+      { hand: '4,4',   cells: ['H','H','H','P','P','H','H','H','H','H'] },
+      { hand: '5,5',   cells: ['D','D','D','D','D','D','D','D','H','H'] },
+      { hand: '6,6',   cells: ['P','P','P','P','P','H','H','H','H','H'] },
+      { hand: '7,7',   cells: ['P','P','P','P','P','P','H','H','H','H'] },
+      { hand: '8,8',   cells: ['P','P','P','P','P','P','P','P','P','P'] },
+      { hand: '9,9',   cells: ['P','P','P','P','P','S','P','P','S','S'] },
+      { hand: '10,10', cells: ['S','S','S','S','S','S','S','S','S','S'] },
+      { hand: 'A,A',   cells: ['P','P','P','P','P','P','P','P','P','P'] },
+    ];
+
+    const ACTION_CLASS = { H:'cell-h', S:'cell-s', D:'cell-d', Ds:'cell-ds', P:'cell-p', R:'cell-r' };
+
+    // ── i18n ─────────────────────────────────────────────────────────────────
+    const S = {
+      en: {
+        back:         '← Back',
+        eyebrow_lbl:  'Perfect Strategy',
+        page_title:   'Basic Strategy Chart',
+        page_sub:     '6-deck · dealer stands on soft 17 · late surrender · double after split allowed',
+        hard_title:   'Hard Totals',
+        soft_title:   'Soft Totals',
+        pairs_title:  'Pairs',
+        dealer_hdr:   'Dealer Upcard',
+        hand_hdr:     'Hand',
+        btn_practice: 'Practice Mode',
+        btn_reveal:   'Reveal All',
+        btn_reset:    'Reset',
+        btn_print:    'Print Chart',
+        leg_h:        'Hit',
+        leg_s:        'Stand',
+        leg_d:        'Double (else Hit)',
+        leg_ds:       'Double (else Stand)',
+        leg_p:        'Split',
+        leg_r:        'Surrender',
+        notes_label:  'Rules for this chart:',
+        notes_1:      '6-deck shoe, dealer stands on soft 17, late surrender available, double after split allowed.',
+        notes_2:      '<strong>D</strong> = Double if allowed, otherwise Hit &nbsp;·&nbsp; <strong>Ds</strong> = Double if allowed, otherwise Stand &nbsp;·&nbsp; <strong>R</strong> = Surrender if allowed, otherwise Hit',
+        notes_3:      'Memorize this chart first. Once you know every cell cold, move on to Hi-Lo counting in redjack.',
+        footer_home:    'Home',
+        footer_guide:   "Beginner's Guide",
+        footer_privacy: 'Privacy Policy',
+        footer_copy:    '© 2026 redjack™. All rights reserved.',
+      },
+      es: {
+        back:         '← Volver',
+        eyebrow_lbl:  'Estrategia perfecta',
+        page_title:   'Tabla de estrategia básica',
+        page_sub:     '6 mazos · croupier se planta en soft 17 · rendición tardía · doblar tras dividir permitido',
+        hard_title:   'Totales duros',
+        soft_title:   'Totales blandos',
+        pairs_title:  'Parejas',
+        dealer_hdr:   'Carta del croupier',
+        hand_hdr:     'Mano',
+        btn_practice: 'Modo práctica',
+        btn_reveal:   'Revelar todo',
+        btn_reset:    'Reiniciar',
+        btn_print:    'Imprimir tabla',
+        leg_h:        'Pedir carta',
+        leg_s:        'Plantarse',
+        leg_d:        'Doblar (si no, pedir)',
+        leg_ds:       'Doblar (si no, plantarse)',
+        leg_p:        'Dividir',
+        leg_r:        'Rendirse',
+        notes_label:  'Reglas de esta tabla:',
+        notes_1:      '6 mazos, el croupier se planta en soft 17, rendición tardía disponible, doblar tras dividir permitido.',
+        notes_2:      '<strong>D</strong> = Doblar si es posible, si no pedir &nbsp;·&nbsp; <strong>Ds</strong> = Doblar si es posible, si no plantarse &nbsp;·&nbsp; <strong>R</strong> = Rendirse si es posible, si no pedir',
+        notes_3:      'Memoriza esta tabla primero. Cuando la domines, pasa al módulo de conteo Hi-Lo en redjack.',
+        footer_home:    'Inicio',
+        footer_guide:   'Guía para principiantes',
+        footer_privacy: 'Política de privacidad',
+        footer_copy:    '© 2026 redjack™. Todos los derechos reservados.',
+      },
+      'zh-Hans': {
+        back:         '← 返回',
+        eyebrow_lbl:  '完美策略',
+        page_title:   '基本策略表',
+        page_sub:     '6副牌·庄家软17点停牌·允许投降·分牌后可加倍',
+        hard_title:   '硬牌合计',
+        soft_title:   '软牌合计',
+        pairs_title:  '对子',
+        dealer_hdr:   '庄家明牌',
+        hand_hdr:     '手牌',
+        btn_practice: '练习模式',
+        btn_reveal:   '全部揭示',
+        btn_reset:    '重置',
+        btn_print:    '打印图表',
+        leg_h:        '要牌',
+        leg_s:        '停牌',
+        leg_d:        '加倍（否则要牌）',
+        leg_ds:       '加倍（否则停牌）',
+        leg_p:        '分牌',
+        leg_r:        '投降',
+        notes_label:  '本表规则：',
+        notes_1:      '6副牌，庄家软17点停牌，允许投降，分牌后可加倍。',
+        notes_2:      '<strong>D</strong> = 可加倍则加倍，否则要牌 &nbsp;·&nbsp; <strong>Ds</strong> = 可加倍则加倍，否则停牌 &nbsp;·&nbsp; <strong>R</strong> = 可投降则投降，否则要牌',
+        notes_3:      '先背熟这张表。每格都烂熟于心后，再开始 redjack 的高低计数法模块。',
+        footer_home:    '首页',
+        footer_guide:   '新手指南',
+        footer_privacy: '隐私政策',
+        footer_copy:    '© 2026 redjack™. 版权所有。',
+      },
+      'zh-Hant': {
+        back:         '← 返回',
+        eyebrow_lbl:  '完美策略',
+        page_title:   '基本策略表',
+        page_sub:     '6副牌·莊家軟17點停牌·允許投降·分牌後可加倍',
+        hard_title:   '硬牌合計',
+        soft_title:   '軟牌合計',
+        pairs_title:  '對子',
+        dealer_hdr:   '莊家明牌',
+        hand_hdr:     '手牌',
+        btn_practice: '練習模式',
+        btn_reveal:   '全部揭示',
+        btn_reset:    '重置',
+        btn_print:    '列印圖表',
+        leg_h:        '要牌',
+        leg_s:        '停牌',
+        leg_d:        '加倍（否則要牌）',
+        leg_ds:       '加倍（否則停牌）',
+        leg_p:        '分牌',
+        leg_r:        '投降',
+        notes_label:  '本表規則：',
+        notes_1:      '6副牌，莊家軟17點停牌，允許投降，分牌後可加倍。',
+        notes_2:      '<strong>D</strong> = 可加倍則加倍，否則要牌 &nbsp;·&nbsp; <strong>Ds</strong> = 可加倍則加倍，否則停牌 &nbsp;·&nbsp; <strong>R</strong> = 可投降則投降，否則要牌',
+        notes_3:      '先背熟這張表。每格都爛熟於心後，再開始 redjack 的高低計數法模組。',
+        footer_home:    '首頁',
+        footer_guide:   '新手指南',
+        footer_privacy: '隱私政策',
+        footer_copy:    '© 2026 redjack™. 版權所有。',
+      },
+    };
+
+    // ── Language ─────────────────────────────────────────────────────────────
+    let currentLang = 'en';
+
+    function detectLang() {
+      const saved = localStorage.getItem('rj_lang');
+      if (saved && S[saved]) return saved;
+      const nav = navigator.language || '';
+      if (nav.startsWith('zh-Hant') || nav === 'zh-TW' || nav === 'zh-HK') return 'zh-Hant';
+      if (nav.startsWith('zh')) return 'zh-Hans';
+      if (nav.startsWith('es')) return 'es';
+      return 'en';
+    }
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('rj_lang', lang);
+      document.documentElement.lang = lang;
+
+      document.querySelectorAll('.lang-btn').forEach((btn, i) => {
+        const langs = ['en','es','zh-Hans','zh-Hant'];
+        btn.classList.toggle('active', langs[i] === lang);
+      });
+
+      const t = S[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      buildLegend(lang);
+      buildTable('hard-table',  HARD,  lang);
+      buildTable('soft-table',  SOFT,  lang);
+      buildTable('pairs-table', PAIRS, lang);
+
+      if (practiceMode) applyPracticeMode();
+    }
+
+    // ── Table Builder ─────────────────────────────────────────────────────────
+    function buildTable(tableId, data, lang) {
+      const table = document.getElementById(tableId);
+      const t = S[lang];
+      table.innerHTML = '';
+
+      // Two-row thead
+      const thead = document.createElement('thead');
+
+      // Row 1: corner + "Dealer Upcard" spanning all dealer cols
+      const tr1 = document.createElement('tr');
+      const corner = document.createElement('th');
+      corner.className = 'hand-corner';
+      corner.rowSpan = 2;
+      corner.textContent = t.hand_hdr;
+      corner.style.cssText = 'font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#aaa;text-align:left;padding-left:14px;vertical-align:middle;';
+      tr1.appendChild(corner);
+
+      const dealerSpan = document.createElement('th');
+      dealerSpan.colSpan = DEALERS.length;
+      dealerSpan.textContent = t.dealer_hdr;
+      dealerSpan.style.textAlign = 'center';
+      tr1.appendChild(dealerSpan);
+      thead.appendChild(tr1);
+
+      // Row 2: individual dealer upcards
+      const tr2 = document.createElement('tr');
+      DEALERS.forEach(d => {
+        const th = document.createElement('th');
+        th.textContent = d;
+        tr2.appendChild(th);
+      });
+      thead.appendChild(tr2);
+      table.appendChild(thead);
+
+      // tbody
+      const tbody = document.createElement('tbody');
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+
+        const handTd = document.createElement('td');
+        handTd.className = 'hand-cell';
+        handTd.textContent = row.hand;
+        tr.appendChild(handTd);
+
+        row.cells.forEach(action => {
+          const td = document.createElement('td');
+          td.className = `cell ${ACTION_CLASS[action]}`;
+          td.dataset.action = action;
+          td.textContent = action;
+          td.addEventListener('click', handleCellClick);
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+    }
+
+    // ── Legend Builder ────────────────────────────────────────────────────────
+    function buildLegend(lang) {
+      const t = S[lang];
+      const container = document.getElementById('legend');
+      const items = [
+        { cls: 'cell-h',  action: 'H',  label: t.leg_h  },
+        { cls: 'cell-s',  action: 'S',  label: t.leg_s  },
+        { cls: 'cell-d',  action: 'D',  label: t.leg_d  },
+        { cls: 'cell-ds', action: 'Ds', label: t.leg_ds },
+        { cls: 'cell-p',  action: 'P',  label: t.leg_p  },
+        { cls: 'cell-r',  action: 'R',  label: t.leg_r  },
+      ];
+
+      container.innerHTML = items.map(item =>
+        `<div class="legend-item">
+          <div class="legend-swatch ${item.cls}">${item.action}</div>
+          <span>${item.label}</span>
+        </div>`
+      ).join('');
+    }
+
+    // ── Practice Mode ─────────────────────────────────────────────────────────
+    let practiceMode = false;
+
+    function togglePractice() {
+      practiceMode = !practiceMode;
+      const btn = document.getElementById('practice-btn');
+      btn.classList.toggle('active', practiceMode);
+      document.getElementById('reveal-btn').classList.toggle('gone', !practiceMode);
+      document.getElementById('reset-btn').classList.toggle('gone', !practiceMode);
+
+      if (practiceMode) {
+        applyPracticeMode();
+      } else {
+        exitPracticeMode();
+      }
+    }
+
+    function applyPracticeMode() {
+      document.querySelectorAll('.strategy-table').forEach(t => t.classList.add('practice-mode'));
+      document.querySelectorAll('.strategy-table .cell').forEach(cell => {
+        if (!cell.classList.contains('revealed')) {
+          cell.classList.add('hidden-cell');
+          cell.textContent = '?';
+        }
+      });
+    }
+
+    function exitPracticeMode() {
+      document.querySelectorAll('.strategy-table').forEach(t => t.classList.remove('practice-mode'));
+      document.querySelectorAll('.strategy-table .cell').forEach(cell => {
+        cell.classList.remove('hidden-cell', 'revealed', 'just-revealed');
+        cell.textContent = cell.dataset.action;
+      });
+    }
+
+    function handleCellClick(e) {
+      if (!practiceMode) return;
+      const cell = e.currentTarget;
+      if (cell.classList.contains('hidden-cell')) {
+        cell.classList.remove('hidden-cell');
+        cell.classList.add('revealed', 'just-revealed');
+        cell.textContent = cell.dataset.action;
+        cell.addEventListener('animationend', () => cell.classList.remove('just-revealed'), { once: true });
+      }
+    }
+
+    function revealAll() {
+      document.querySelectorAll('.strategy-table .cell.hidden-cell').forEach(cell => {
+        cell.classList.remove('hidden-cell');
+        cell.classList.add('revealed');
+        cell.textContent = cell.dataset.action;
+      });
+    }
+
+    function resetPractice() {
+      document.querySelectorAll('.strategy-table .cell').forEach(cell => {
+        cell.classList.remove('revealed', 'just-revealed');
+        cell.classList.add('hidden-cell');
+        cell.textContent = '?';
+      });
+    }
+
+    // ── Print ─────────────────────────────────────────────────────────────────
+    function printChart() {
+      const wasPracticing = practiceMode;
+      if (wasPracticing) exitPracticeMode();
+      window.print();
+      if (wasPracticing) {
+        practiceMode = true;
+        applyPracticeMode();
+      }
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    (function init() {
+      const lang = detectLang();
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach((btn, i) => {
+        const langs = ['en','es','zh-Hans','zh-Hant'];
+        btn.classList.toggle('active', langs[i] === lang);
+      });
+      setLang(lang);
+    })();
+  </script>
+
+</body>
+</html>
