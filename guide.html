@@ -251,42 +251,26 @@
       footer { padding: 32px 20px; }
     }
 
-    /* ── Card decorations ── */
-    .card-deco {
+    /* ── Side photo panels ── */
+    .side-cards {
       position: fixed;
-      width: 66px; height: 92px;
-      background: #ffffff;
-      border-radius: 7px;
-      border: 1px solid #ddd9d0;
-      box-shadow: 2px 3px 12px rgba(0,0,0,0.15);
-      padding: 5px 6px;
-      display: flex; flex-direction: column; justify-content: space-between;
-      pointer-events: none; user-select: none;
-      z-index: 1;
+      top: 0; bottom: 0;
+      width: calc(50vw - 400px);
+      background-image: url('https://images.unsplash.com/photo-1501003878151-d3cb87799705?w=2400&q=85&auto=format&fit=crop');
+      background-size: cover;
+      pointer-events: none;
+      user-select: none;
+      z-index: 100;
     }
-    .cd-tl, .cd-br { font-size: 12px; font-weight: 900; line-height: 1.2; color: #1a1a1a; }
-    .cd-br { transform: rotate(180deg); align-self: flex-end; }
-    .cd-s { display: block; }
-    .cd-s.r { color: #c0152a; }
-    @media (max-width: 1140px) { .card-deco { display: none; } }
+    .side-left  { left: 0;  background-position: left center; }
+    .side-right { right: 0; background-position: right center; }
+    @media (max-width: 1100px) { .side-cards { display: none; } }
   </style>
 </head>
 <body>
 
-  <!-- Left cards -->
-  <div class="card-deco" style="left:28px;top:200px;transform:rotate(-13deg)"><div class="cd-tl">A<span class="cd-s">♠</span></div><div class="cd-br">A<span class="cd-s">♠</span></div></div>
-  <div class="card-deco" style="left:62px;top:350px;transform:rotate(8deg)"><div class="cd-tl">K<span class="cd-s r">♥</span></div><div class="cd-br">K<span class="cd-s r">♥</span></div></div>
-  <div class="card-deco" style="left:18px;top:500px;transform:rotate(-20deg)"><div class="cd-tl">5<span class="cd-s">♣</span></div><div class="cd-br">5<span class="cd-s">♣</span></div></div>
-  <div class="card-deco" style="left:72px;top:640px;transform:rotate(15deg)"><div class="cd-tl">Q<span class="cd-s r">♦</span></div><div class="cd-br">Q<span class="cd-s r">♦</span></div></div>
-  <div class="card-deco" style="left:32px;top:780px;transform:rotate(-7deg)"><div class="cd-tl">9<span class="cd-s">♠</span></div><div class="cd-br">9<span class="cd-s">♠</span></div></div>
-  <div class="card-deco" style="left:50px;top:920px;transform:rotate(22deg)"><div class="cd-tl">3<span class="cd-s r">♥</span></div><div class="cd-br">3<span class="cd-s r">♥</span></div></div>
-  <!-- Right cards -->
-  <div class="card-deco" style="right:35px;top:160px;transform:rotate(11deg)"><div class="cd-tl">J<span class="cd-s r">♥</span></div><div class="cd-br">J<span class="cd-s r">♥</span></div></div>
-  <div class="card-deco" style="right:18px;top:310px;transform:rotate(-16deg)"><div class="cd-tl">10<span class="cd-s">♣</span></div><div class="cd-br">10<span class="cd-s">♣</span></div></div>
-  <div class="card-deco" style="right:68px;top:460px;transform:rotate(9deg)"><div class="cd-tl">6<span class="cd-s r">♦</span></div><div class="cd-br">6<span class="cd-s r">♦</span></div></div>
-  <div class="card-deco" style="right:28px;top:610px;transform:rotate(-22deg)"><div class="cd-tl">2<span class="cd-s">♠</span></div><div class="cd-br">2<span class="cd-s">♠</span></div></div>
-  <div class="card-deco" style="right:55px;top:760px;transform:rotate(17deg)"><div class="cd-tl">8<span class="cd-s r">♥</span></div><div class="cd-br">8<span class="cd-s r">♥</span></div></div>
-  <div class="card-deco" style="right:14px;top:900px;transform:rotate(-9deg)"><div class="cd-tl">4<span class="cd-s">♣</span></div><div class="cd-br">4<span class="cd-s">♣</span></div></div>
+  <div class="side-cards side-left"></div>
+  <div class="side-cards side-right"></div>
 
   <nav>
     <a class="logo" href="/">
