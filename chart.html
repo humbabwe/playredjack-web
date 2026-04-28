@@ -345,22 +345,35 @@
       }
 
       .pt-table th {
-        background: #1a1a1a;
-        color: #fff;
+        background: #ffffff;
+        color: #111;
         font-size: 6pt;
-        font-weight: 800;
+        font-weight: 700;
         padding: 2pt 1pt;
         text-align: center;
-        border: 0.5pt solid #444;
+        border: 0.5pt solid rgba(0,0,0,0.18);
         letter-spacing: 0;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
       }
 
       .pt-table th.pt-corner {
-        background: #2a2a2a;
-        color: #aaa;
+        background: #ffffff;
+        padding: 1pt;
+      }
+
+      .pt-rj-logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 10pt; height: 10pt;
+        border-radius: 50%;
+        border: 1pt solid #c0152a;
         font-size: 5pt;
-        letter-spacing: 0.3pt;
-        text-transform: uppercase;
+        font-weight: 900;
+        color: #c0152a;
+        letter-spacing: -0.3pt;
+        line-height: 1;
       }
 
       .pt-table td {
@@ -836,7 +849,7 @@
       const trH = document.createElement('tr');
       const corner = document.createElement('th');
       corner.className = 'pt-corner';
-      corner.textContent = '↓ / →';
+      corner.innerHTML = '<span class="pt-rj-logo">rȷ</span>';
       trH.appendChild(corner);
       DEALERS.forEach(d => {
         const th = document.createElement('th');
